@@ -1,4 +1,4 @@
-name: CI/CD
+name: CI/CD Pipeline
 
 on:
   push:
@@ -10,25 +10,33 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: '20'
-          cache: 'npm'
-      - run: npm ci
-      - run: npm test
+    - name: Checkout repository
+      uses: actions/checkout@v4
+    
+    - name: Setup Node.js environment
+      uses: actions/setup-node@v4
+      with:
+        node-version: '24'
+        cache: 'npm'
+    
+    - name: Install NPM dependencies
+      run: npm ci
+    
+    - name: Execute test suite
+      run: npm test
 
   deploy:
     needs: test
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
     steps:
-      - uses: actions/checkout@v3
-      - name: Deploy
-        uses: vercel/action@v0.2.1
-        with:
-          vercel-token: ${{ secrets.VERCEL_TOKEN }}
-          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
-          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
-          working-directory: ./
-
+    - name: Checkout repository
+      uses: actions/checkout@v4
+    
+    - name: Setup Node.js environment
+      uses: actions/setup-node@v4
+      with:
+        node-version: '24'
+    
+    - name: Deploy to production Vercel
+      run: npx vercel@latest --prod --token=${{ secrets.VERCEL_TOKEN }} --project=${{ secrets.VERCEL_PROJECT_ID }} --confirm
