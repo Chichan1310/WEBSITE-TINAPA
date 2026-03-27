@@ -39,4 +39,7 @@ jobs:
         node-version: '24'
     
     - name: Deploy to production Vercel
-      run: npx vercel@latest --prod --token=${{ secrets.VERCEL_TOKEN }} --project=${{ secrets.VERCEL_PROJECT_ID }} --confirm
+      env:
+        VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+        VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+      run: npx vercel@latest --prod --confirm
