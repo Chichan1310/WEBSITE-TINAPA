@@ -10,12 +10,18 @@ document.addEventListener('DOMContentLoaded', function() {
         productsLoading.style.display = 'none';
         products.forEach(product => {
           const div = document.createElement('div');
-          div.className = 'product';
+          div.className = 'ecommerce-product';
           div.innerHTML = `
             <img src="${product.image}" alt="${product.name}">
-            <h3>${product.name}</h3>
-            <p>${product.description}</p>
-            <div class="product-price">${product.price}</div>
+            <div class="product-info">
+              <div class="product-rating">
+                ★★★★☆
+                <span class="rating-num">(4.5)</span>
+              </div>
+              <div class="product-name">${product.name}</div>
+              <div class="product-price">${product.price}</div>
+              <button class="add-to-cart" onclick="addToCart(${product.id})">Add to Cart</button>
+            </div>
           `;
           productsGrid.appendChild(div);
         });
