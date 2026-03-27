@@ -9,14 +9,13 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-    
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v3
     
-    - name: Setup Node.js
-      uses: actions/setup-node@v4
+    - name: Use Node.js
+      uses: actions/setup-node@v3
       with:
-        node-version: '24'
+        node-version: 24
         cache: 'npm'
     
     - name: Install dependencies
@@ -30,17 +29,7 @@ jobs:
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
-    
-    - name: Setup Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: '24'
-    
-    - name: Install Vercel CLI
-      run: npm i -g vercel
+    - uses: actions/checkout@v3
     
     - name: Deploy to Vercel
-      run: vercel --prod --token ${{ secrets.VERCEL_TOKEN }} --confirm
-      env:
-        VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+      run: npx vercel@latest --prod --token ${{ secrets.VERCEL_TOKEN }} --project ${{ secrets.VERCEL_PROJECT_ID }} --confirm
