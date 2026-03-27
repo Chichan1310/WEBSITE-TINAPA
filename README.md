@@ -54,6 +54,14 @@ VERCEL_TOKEN      vercel_xxxx (vercel.com/tokens)
 VERCEL_PROJECT_ID prj_wrFMr5qGYBucTYI7fcXKtzbnhE5O (Vercel settings)
 ```
 
+## 🚀 CI/CD Pipeline Update (2026)
+- Now uses **Node.js 24** for all GitHub Actions workflows.
+- Added `FORCE_JAVASCRIPT_ACTIONS_TO_NODE24=true` to ensure compatibility and remove Node.js 20 deprecation warnings.
+- Vercel deployment uses environment variables for secure token/project ID handling.
+- To trigger the pipeline, simply push or open a pull request to `main`.
+
+**No more Node.js deprecation warnings!**
+
 ## 📊 Tests (npm test)
 ```
 PASS products API ✓
