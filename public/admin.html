@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin - Tinapa</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header>
+    <nav>
+      <div class="logo">🍖 Tinapa</div>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="products.html">Products</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="admin.html">Admin</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="admin">
+    <h1>Admin Dashboard</h1>
+    <div id="password-section">
+      <input type="password" id="admin-password" placeholder="Enter password (admin123)">
+      <button onclick="checkPassword()">Login</button>
+    </div>
+    <div id="admin-panel" style="display: none;">
+      <h2>Add New Product</h2>
+<form id="add-product-form" enctype="multipart/form-data">
+        <input type="text" id="prod-name" placeholder="Product Name" required>
+        <input type="text" id="prod-price" placeholder="Price (e.g. $15/kg)" required>
+        <input type="file" id="prod-image" accept="image/*" required>
+        <textarea id="prod-desc" placeholder="Description" required></textarea>
+        <button type="submit">Add Product</button>
+      </form>
+      <p id="admin-message"></p>
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; 2024 Tinapa Business. All rights reserved.</p>
+  </footer>
+
+  <script src="js/admin.js"></script>
+</body>
+</html>
