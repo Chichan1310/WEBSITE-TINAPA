@@ -1,61 +1,117 @@
 # PTL Best Tinapa Website 🚀
 
-## Full-Stack E-Commerce with CI/CD
+## Full-Stack E-Commerce with CI/CD Pipeline
 
-**Live Demo:** [Vercel Deploy](https://your-vercel-url.vercel.app)
+**Live Demo:** [Vercel](https://your-project.vercel.app) | [GitHub](https://github.com/Chichan1310/WEBSITE-TINAPA)
 
-### Features
-- 📱 Responsive modern UI
-- 🐟 Products catalog (API-driven)
-- 📝 Contact form (backend)
-- 🔐 **Admin Dashboard** (CRUD products, password: `admin123`)
-- ✅ **CI/CD**: GitHub Actions + Jest tests + Vercel deploy
+### ✨ Features
+- 📱 **Responsive Design** - Mobile-first UI
+- 🐟 **Products Catalog** - Dynamic API fetching
+- 📧 **Contact Form** - Backend processing + logging
+- 🔐 **Admin Dashboard** - Full CRUD, upload, pagination/filter (pass: `admin123`)
+- ✅ **Automated CI/CD** - Tests + Vercel deploy
+- 🎨 **Modern Styling** - Gradients, glassmorphism
 
-### Tech Stack
+### 🛠 Tech Stack
 ```
-Frontend: HTML/CSS/JS
-Backend: Node.js/Express
-Data: JSON file
-Tests: Jest + Supertest
+Frontend: HTML5/CSS3/Vanilla JS
+Backend: Node.js/Express.js
+Storage: JSON + Multer uploads
+Testing: Jest + Supertest
 CI/CD: GitHub Actions → Vercel
+Deployment: Serverless (Vercel)
 ```
 
-## Quick Start 🏃‍♂️
+## 🚀 Quick Start
 
 ```bash
+# Clone & Install
+git clone https://github.com/Chichan1310/WEBSITE-TINAPA.git
+cd WEBSITE-TINAPA
 npm install
-npm start
-# http://localhost:3000
+
+# Development
+npm run dev     # nodemon
+
+# Production
+npm start       # http://localhost:3000
+
+# Tests
+npm test        # Jest (3+ tests pass)
 ```
 
-**Dev:** `npm run dev`
-
-**Test:** `npm test` ✅
-
-## Admin Dashboard
-- URL: `/admin.html`
-- Password: `admin123`
-- Features: Add/Edit/Delete products, image upload, search/filter, pagination
-
-## CI/CD Pipeline 🔄
+## 👨‍💼 Admin Panel
 ```
-Push/PR main → GitHub Actions:
-1. npm ci + npm test (Jest)
-2. Tests pass → vercel --prod
-3. Fail → Blocked + error report
+URL: http://localhost:3000/admin.html
+Password: admin123
+
+Features:
+- Add/Edit/Delete products w/ images
+- Search + Category filter (fish/meat)
+- Pagination (8/page)
+- Responsive dashboard
 ```
 
-**Secrets:** VERCEL_TOKEN + PROJECT_ID in GitHub
+## 🔄 CI/CD Pipeline (GitHub Actions)
+```
+Trigger: Push/PR to main
+1. Checkout code
+2. npm ci (clean install)
+3. npm test (Jest) ← FAIL = BLOCKED
+4. vercel --prod (deploy) ← PASS ONLY
+```
 
-## Development
-- Edit `public/` for UI
-- `data/products.json` for products
-- `tests/` for new tests
-- Push → Auto deploy!
+![Pipeline](https://github.com/Chichan1310/WEBSITE-TINAPA/actions/workflows/ci-cd.yml/badge.svg)
 
-## Deployment to Vercel
-1. Connect GitHub repo to Vercel
-2. Add secrets (above)
-3. Push = Live update
+**Secrets Required (GitHub Settings > Secrets):**
+| Name | Value | Source |
+|------|-------|--------|
+| `VERCEL_TOKEN` | `vercel_...` | vercel.com/account/tokens |
+| `VERCEL_PROJECT_ID` | `prj_wrFMr5qGYBucTYI7fcXKtzbnhE5O` | Vercel project Settings/General |
 
-Enjoy! 🎣✨
+## 📚 Project Structure
+```
+.
+├── server.js           # Express API
+├── public/             # Static frontend
+│   ├── admin.html      # Dashboard
+│   ├── css/admin-*.css
+│   └── js/admin-dashboard.js
+├── data/products.json  # Products + categories
+├── tests/server.test.js # Jest API tests
+├── .github/workflows/  # CI/CD YAML
+└── package.json        # Deps + scripts
+```
+
+## 🤝 Collaboration
+- Professor: Added as collaborator? Settings > Collaborators
+- Push to main → Auto test/deploy
+- PRs → Tests before merge
+
+## 🔧 Customization
+```
+Products: data/products.json
+UI: public/*
+New Tests: tests/*.test.js → npm test
+New Features: server.js routes
+Deploy: git push = live
+```
+
+## 📈 Tests Coverage
+```
+npm test
+✓ GET /api/products → Array
+✓ POST /api/contact → Success
+✓ Admin auth fail → 401
+```
+
+## 🚀 Production Deploy
+1. Vercel GitHub connected
+2. Secrets set
+3. `git push main` → Live in ~1min
+
+**Billing Note:** GitHub Actions free tier 2k min/month. Check billing if locked.
+
+---
+
+**Built with ❤️ for PTL Best Tinapa | Tests 100% 🚀**
