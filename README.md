@@ -1,169 +1,88 @@
-# PTL Best Tinapa in Bulacan - Production-Ready Full-Stack Website
+# PTL Best Tinapa Website - CI/CD Complete 🚀
 
-## 🌐 Live Deployment Status
-**Local:** http://localhost:3000  
-**Vercel:** Auto-updates on successful CI/CD
+## ✅ Status
+**Local Server:** Running `npm start` ✓  
+**Tests:** `npm test` PASS ✓  
+**CI/CD:** Node.js 24, ready for push ✓  
+**Public Repo:** Unlimited Actions ✓
 
-## 🎯 Key Features
-```
-✅ Responsive mobile-first design
-✅ Dynamic products catalog (API-driven)
-✅ Contact form with backend processing
-✅ Complete admin dashboard (CRUD + upload)
-✅ Image upload and management
-✅ Product search and category filtering
-✅ Pagination and responsive tables
-✅ Automated CI/CD testing and deployment
-✅ Professional glassmorphism UI
-```
+## 🎯 Production Features
+- 🔐 Admin dashboard (CRUD + upload + filter)
+- 📱 Fully responsive design
+- 🐟 API-driven products catalog
+- 📧 Contact form API
+- 📊 Category filtering (fish/meat)
+- 📄 Pagination & search
 
-## 🛠 Complete Tech Stack
+## 🛠 Stack
 ```
-Frontend: HTML5 • CSS3 • Vanilla JavaScript
-Backend: Node.js • Express.js API server
-Database: JSON file system + Multer uploads
-Testing: Jest testing framework + Supertest
-CI/CD: GitHub Actions workflows → Vercel
-Deployment: Vercel serverless platform
-Development: Nodemon hot reload
+Backend: Node.js 24 | Express.js
+Frontend: HTML | CSS | Vanilla JS
+Testing: Jest | Supertest
+CI/CD: GitHub Actions → Vercel
+Storage: JSON | Multer uploads
 ```
 
-## 🚀 Zero-Config Start
-
+## 🎬 3-Step Start
 ```bash
-git clone https://github.com/Chichan1310/WEBSITE-TINAPA.git
-cd WEBSITE-TINAPA
 npm install
-npm start
-```
-**[Open](http://localhost:3000)**
-
-### Available Scripts
-```bash
-npm start       # Production server
-npm run dev     # Development with auto-reload
-npm test        # Run test suite (3 tests passing)
+npm start  
+# http://localhost:3000
+npm test    # 100% pass
 ```
 
-## 🧪 Automated Testing (100% Coverage)
-```bash
-npm test
+## 👨‍💼 Admin (admin123)
+`/admin.html` → **Full CRUD:**
+- ➕ Add product + image
+- ✏️ Edit all fields  
+- 🗑️ Delete w/ confirm
+- 🔍 Live search/filter
+- 📱 Mobile dashboard
+
+## 🔄 CI/CD Workflow (.github/workflows/ci-cd.yml)
 ```
-**Test Results:**
-```
-✓ Products API returns valid array (26ms)
-✓ Contact form submission succeeds (40ms)
-✓ Admin authentication properly fails (4ms)
-```
-
-## 👨‍💼 Professional Admin Dashboard
-**URL:** `/admin.html` | **Password:** `admin123`
-
-**Dashboard Capabilities:**
-| Feature | Status |
-|---------|--------|
-| Add products | ✅ with images |
-| Edit products | ✅ all fields |
-| Delete products | ✅ confirmation |
-| Search products | ✅ live filtering |
-| Category filter | ✅ Fish/Meat |
-| Pagination | ✅ 8/page |
-| Responsive design | ✅ mobile/tablet |
-
-## 🔄 GitHub Actions CI/CD Pipeline
-
-### Trigger Events
-- Push to `main` branch
-- Pull Request targeting `main`
-
-### Pipeline Jobs
-```
-TEST (Always runs)
-├── Checkout code
-├── Node.js 20 setup
-├── npm ci (production deps)
-└── npm test (FAIL = BLOCK)
-   ↓ PASS ONLY ↓
-
-DEPLOY (main branch only)
-├── Vercel CLI install
-└── vercel --prod --token $VERCEL_TOKEN --confirm
+Push/PR main →
+TEST: npm ci + npm test → PASS ONLY ↓
+DEPLOY: vercel --prod (Vercel secrets)
 ```
 
-### Workflow Status
-![All Workflows](https://github.com/Chichan1310/WEBSITE-TINAPA/actions/workflows/ci-cd.yml/badge.svg)
+**Updated:** Node.js 24 (no deprecation warnings)
 
-### Required GitHub Secrets
-| Secret Name | Your Value | How to Get |
-|-------------|------------|------------|
-| `VERCEL_TOKEN` | `vercel_...` (64 chars) | vercel.com/account/tokens |
-| `VERCEL_PROJECT_ID` | `prj_wrFMr5qGYBucTYI7fcXKtzbnhE5O` | Project Settings → General |
-
-## 👥 Academic Collaboration
+**Secrets (GitHub Settings > Secrets):**
 ```
-1. Professor → Settings → Collaborators → Add email
-2. Push/PR to main → Automatic testing
-3. Tests pass → Live Vercel deployment
-4. Tests fail → Detailed error + blocked
+VERCEL_TOKEN      vercel_xxxx (vercel.com/tokens)
+VERCEL_PROJECT_ID prj_wrFMr5qGYBucTYI7fcXKtzbnhE5O (Vercel settings)
 ```
 
-## 📁 Repository Structure
+## 📊 Tests (npm test)
 ```
-WEBSITE-TINAPA/ (Root)
-├── server.js                   # Complete API server
-├── public/                     # Production static files
-│   ├── admin.html             # Admin dashboard UI
-│   ├── css/admin-dashboard.css # Glass UI styles
-│   ├── js/admin-dashboard.js    # Admin functionality
-│   └── uploads/               # Product images
-├── data/
-│   └── products.json          # Category-enabled products
-├── tests/
-│   └── server.test.js         # Production-grade tests
-├── .github/workflows/
-│   └── ci-cd.yml              # CI/CD configuration
-├── package.json               # Dependencies & scripts
-├── package-lock.json          # Lockfile
-└── README.md                  # This documentation
+PASS products API ✓
+PASS contact form ✓  
+PASS admin auth ✓
 ```
 
-## 🔧 Git Push Authentication Fix
-**Windows Issue:** Credential Manager caching old user
+## 🤝 Professor Workflow
+1. Add collaborator (Settings > Manage)
+2. Push/PR → Auto test/deploy
+3. Live URL updates instantly
 
+## 📁 Structure
 ```
-1. Windows Search "Credential Manager"
-2. "Windows Credentials" → Remove all "git:https://github.com"
-3. git push origin main → New auth prompt
-```
-
-## 🚀 Vercel Production Deployment
-```
-1. vercel.com → New Project → Import GitHub repo
-2. Configure secrets (table above)
-3. Push to main = Instant live update
-```
-
-## 📊 Test Coverage Report
-```
-Test Suites: 1 passed, 1 total
-Tests: 3 passed, 3 total
-Time: 1.1s
-Coverage: API endpoints 100%
+server.js                 ← API
+public/admin.html         ← Dashboard
+public/js/admin-dashboard.js ← Logic
+data/products.json        ← Data (w/ categories)
+tests/server.test.js      ← Tests
+.github/workflows/ci-cd.yml ← Pipeline
 ```
 
-## 🎓 Academic Excellence Features
+## 🔧 Git Push Fix
+**Credential Manager → Remove GitHub → push success**
+
+## 🚀 Deploy Live
 ```
-✅ Professor collaboration workflow
-✅ Automated testing gates deploys
-✅ Production-grade error reporting
-✅ Zero-configuration CI/CD
-✅ Local testing identical to CI
-✅ Vercel serverless hosting
-✅ Professional documentation
+git push origin main
+→ Tests run → Vercel live!
 ```
 
-**Chichan1310/WEBSITE-TINAPA - Enterprise-Grade DevOps for Academia!**
-
----
-
-**Ready for Production & Grading | Automated Everything 🚀**
+**Ready for demo & grading! Push to see magic ✨**
