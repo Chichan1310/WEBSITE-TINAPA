@@ -1,112 +1,139 @@
-# PTL Best Tinapa Website 🚀
+# PTL Best Tinapa in Bulacan - Full-Stack Website with CI/CD
 
-## Full-Stack E-Commerce with CI/CD Pipeline
+## 📱 Live Preview
+Update with Vercel URL after deployment
 
-**Live Demo:** Update after deploy | [GitHub](https://github.com/Chichan1310/WEBSITE-TINAPA)
+## 🎯 Features
+- **Responsive Design** - Works on all devices
+- **Products API** - Dynamic catalog from JSON
+- **Contact Form** - Backend submission 
+- **Admin Dashboard** - Complete CRUD operations
+- **Image Upload** - Product photos
+- **Search & Filter** - Category-based (Fish/Meat)
+- **Pagination** - Professional UI
+- **CI/CD Pipeline** - Automated testing & deployment
 
-### ✨ Features
-- 📱 Responsive modern UI with glassmorphism
-- 🐟 Dynamic products catalog (API)
-- 📧 Contact form (server logging)
-- 🔐 **Admin Dashboard** - CRUD, upload, filter/pagination (admin123)
-- ✅ **CI/CD Pipeline** - Jest tests + Vercel auto-deploy
-- 🎨 Background screens, animations
+## 🛠 Technology Stack
+- **Backend:** Node.js + Express.js
+- **Frontend:** HTML5, CSS3, Vanilla JavaScript
+- **Storage:** JSON database + Multer file uploads
+- **Testing:** Jest + Supertest
+- **Deployment:** Vercel Serverless
+- **CI/CD:** GitHub Actions
 
-### 🛠 Tech Stack
-```
-Frontend: HTML/CSS/JS
-Backend: Express.js API
-Storage: JSON + file uploads
-Testing: Jest + Supertest (3+ tests)
-CI/CD: GitHub Actions → Vercel Serverless
-```
+## 🚀 Getting Started
 
-## 🚀 Local Development
+### Prerequisites
+- Node.js 18+
+- GitHub account
+- Vercel account (optional for deploy)
 
+### Installation
 ```bash
 git clone https://github.com/Chichan1310/WEBSITE-TINAPA.git
 cd WEBSITE-TINAPA
 npm install
 npm start
-# Open http://localhost:3000
+```
+Open [http://localhost:3000](http://localhost:3000)
+
+### Scripts
+```bash
+npm run dev    # Development with hot reload
+npm test       # Run Jest tests
+npm start      # Production server
 ```
 
-```
-Dev: npm run dev (hot reload)
-Test: npm test ✅
-```
-
-## 👨‍💼 Admin Panel Guide
-```
-URL: /admin.html
-Password: admin123
-
-✅ Add/Edit/Delete products
-✅ Image upload (/uploads)
-✅ Search + category filter (fish/meat)
-✅ Responsive dashboard + sidebar
-```
-
-## 🔄 CI/CD - GitHub Actions
-```
-Trigger: Push/PR → main branch
-
-Job 1: TEST
-  - npm ci
-  - npm test (fail = blocked)
-
-Job 2: DEPLOY (test pass only)
-  - vercel --prod --token $VERCEL_TOKEN
-```
-
-**Status Badge:** ![CI](https://github.com/Chichan1310/WEBSITE-TINAPA/workflows/CI/badge.svg) ![CD](https://github.com/Chichan1310/WEBSITE-TINAPA/workflows/CD/badge.svg)
-
-### 🔑 GitHub Secrets Required
-| Secret | Value | Get From |
-|--------|-------|----------|
-| `VERCEL_TOKEN` | `vercel_...` | vercel.com/account/tokens |
-| `VERCEL_PROJECT_ID` | `prj_wrFMr5qGYBucTYI7fcXKtzbnhE5O` | Vercel Settings/General |
-
-**Billing Issue:** github.com/settings/billing → Add payment (free tier)
-
-## 📁 Project Structure
-```
-.
-├── server.js - API endpoints
-├── public/
-│   ├── admin.html - Dashboard
-│   ├── css/admin-dashboard.css - Glass UI
-│   └── js/admin-dashboard.js - Logic
-├── data/products.json - Data (w/ categories)
-├── tests/server.test.js - API tests
-├── .github/workflows/ci-cd.yml - Pipeline
-└── README.md
-```
-
-## 🤝 Collaboration (Professor)
-1. Repo Settings > Collaborators > Add email
-2. Push to main → Auto test/deploy
-3. PRs tested before merge
-
-## 🧪 Running Tests
+## 🧪 Testing
 ```bash
 npm test
-# PASS: Products API ✓ Contact ✓ Admin auth ✓
+```
+**3 Passing Tests:**
+- `/api/products` returns array
+- `/api/contact` POST success
+- `/api/admin/products` auth fail (401)
+
+## 👨‍💼 Admin Dashboard
+**Access:** `/admin.html`  
+**Password:** `admin123`
+
+**Capabilities:**
+- ➕ Add new products with images
+- ✏️ Edit existing products
+- 🗑️ Delete products
+- 🔍 Search products
+- 📂 Filter by category (Fish/Meat)
+- 📄 Pagination (8 per page)
+- 📱 Fully responsive
+
+## 🔄 CI/CD Pipeline (GitHub Actions)
+
+### Workflow Trigger
+Push or Pull Request to `main` branch
+
+### Jobs
+1. **Test** - Always runs
+   ```
+   checkout → npm ci → npm test
+   FAIL = Pipeline stops
+   ```
+2. **Deploy** - Only if tests pass + main branch
+   ```
+   vercel --prod --token $VERCEL_TOKEN
+   ```
+
+### GitHub Secrets Setup
+| Name                | Value                          | Source                        |
+|---------------------|--------------------------------|-------------------------------|
+| VERCEL_TOKEN       | `vercel_xxxxxxxxxxxxxxxxxxx`   | vercel.com/account/tokens     |
+| VERCEL_PROJECT_ID  | `prj_wrFMr5qGYBucTYI7fcXKtzbnhE5O` | Vercel project Settings/General |
+
+### Status Badges
+![Tests](https://github.com/Chichan1310/WEBSITE-TINAPA/workflows/Test/badge.svg)
+![Deploy](https://github.com/Chichan1310/WEBSITE-TINAPA/workflows/Deploy/badge.svg)
+
+## 👥 Collaboration Setup
+1. **Professor Access:** Repository Settings → Collaborators → Add collaborator
+2. **Contributions:** Push to `main` = automatic test + deploy
+3. **Review:** Pull Requests automatically tested
+
+## 📁 File Structure
+```
+WEBSITE-TINAPA/
+├── server.js                 # Express API server
+├── public/                   # Frontend static files
+│   ├── admin.html            # Admin dashboard
+│   ├── css/admin-dashboard.css # Admin styles (glassmorphism)
+│   └── js/admin-dashboard.js   # Admin JavaScript
+├── data/
+│   └── products.json         # Products database
+├── tests/
+│   └── server.test.js        # API tests
+├── .github/workflows/
+│   └── ci-cd.yml             # GitHub Actions pipeline
+├── package.json              # Dependencies + scripts
+└── README.md                 # This file!
 ```
 
-## 🚀 Vercel Production
-1. Connect GitHub repo (vercel.com)
-2. Add secrets above
-3. Push main = Live update (~1min)
+## ⚙️ Vercel Deployment
+1. Import GitHub repo to Vercel Dashboard
+2. Add GitHub Secrets (table above)
+3. Push to main → Automatic production deployment
 
-**Billing Locked?** Make repo public (unlimited minutes) or add card.
+## 🔧 Troubleshooting
+**Git Push Auth:** Windows Credential Manager → Remove GitHub entries
+**Billing Locked:** github.com/settings/billing → Verify payment
+**Tests Fail:** Check `npm test` locally first
 
-## 📈 Next Steps
-- Add more tests (`tests/*.test.js`)
-- Email integration (nodemailer)
-- Database (PlanetScale/Mongo)
-- Auth (JWT)
+## 📈 Future Enhancements
+- [ ] Database (PostgreSQL/MongoDB)
+- [ ] User authentication (JWT)
+- [ ] Payment integration
+- [ ] More test coverage
+- [ ] Docker containerization
 
-**Built for Academic Excellence | Tests Gate Production! 🎓**
+---
 
-**Chichan1310/WEBSITE-TINAPA** - CI/CD Ready ✨
+**Academic Excellence Project | Automated CI/CD | Ready for Production! 🎓✨**
+
+Made with ❤️ by Chichan1310
