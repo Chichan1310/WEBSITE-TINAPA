@@ -116,7 +116,7 @@ function filterProducts() {
   filteredProducts = products.filter(product => {
     const matchesSearch = product.name.toLowerCase().includes(search) || 
                          product.description.toLowerCase().includes(search);
-    const matchesFilter = filter === '' || product.price.toLowerCase().includes(filter);
+    const matchesFilter = filter === '' || (product.category && product.category.toLowerCase() === filter);
     return matchesSearch && matchesFilter;
   });
   

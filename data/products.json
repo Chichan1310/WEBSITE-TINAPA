@@ -1,37 +1,10 @@
 [
   {
-    "id": 1,
-    "name": "Smoked Catfish",
-    "price": "$15/kg",
-    "description": "Freshly smoked catfish, ready to eat or cook.",
-    "image": "https://via.placeholder.com/300x200?text=Smoked+Catfish"
-  },
-  {
-    "id": 2,
-    "name": "Smoked Tilapia",
-    "price": "$12/kg",
-    "description": "Premium smoked tilapia with natural spices.",
-    "image": "https://via.placeholder.com/300x200?text=Smoked+Tilapia"
-  },
-  {
-    "id": 3,
-    "name": "Smoked Chicken",
-    "price": "$10/kg",
-    "description": "Juicy smoked chicken pieces.",
-    "image": "https://via.placeholder.com/300x200?text=Smoked+Chicken"
-  },
-  {
-    "id": 4,
-    "name": "Smoked Beef",
-    "price": "$18/kg",
-    "description": "Tender smoked beef suya style.",
-    "image": "https://via.placeholder.com/300x200?text=Smoked+Beef"
-  },
-  {
     "id": 5,
     "name": "tinapang manok",
     "price": "190",
-    "description": "d",
-    "image": "/uploads/1774584741430-ScreenShot-2025-11-7_6-44-59.png"
+    "description": "best seller",
+    "image": "/uploads/1774593074363-571175988_1196806809162645_1491257399557988095_n.jpg",
+    "category": "meat"
   }
 ]
