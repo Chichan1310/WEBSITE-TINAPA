@@ -26,5 +26,12 @@
     "price": "$18/kg",
     "description": "Tender smoked beef suya style.",
     "image": "https://via.placeholder.com/300x200?text=Smoked+Beef"
+  },
+  {
+    "id": 5,
+    "name": "tinapang manok",
+    "price": "190",
+    "description": "d",
+    "image": "/uploads/1774584741430-ScreenShot-2025-11-7_6-44-59.png"
   }
 ]

@@ -10,21 +10,16 @@ function checkPassword() {
 
 document.getElementById('add-product-form').addEventListener('submit', function(e) {
   e.preventDefault();
-  const name = document.getElementById('prod-name').value;
-  const price = document.getElementById('prod-price').value;
-  const image = document.getElementById('prod-image').value;
-  const desc = document.getElementById('prod-desc').value;
-
   const formData = new FormData();
-    formData.append('pass', document.getElementById('admin-password').value);
-    formData.append('name', document.getElementById('prod-name').value);
-    formData.append('price', document.getElementById('prod-price').value);
-    formData.append('image', document.getElementById('prod-image').files[0]);
-    formData.append('description', document.getElementById('prod-desc').value);
-    fetch('/api/admin/product', {
-      method: 'POST',
-      body: formData
-    })
+  formData.append('pass', document.getElementById('admin-password').value);
+  formData.append('name', document.getElementById('prod-name').value);
+  formData.append('price', document.getElementById('prod-price').value);
+  formData.append('image', document.getElementById('prod-image').files[0]);
+  formData.append('description', document.getElementById('prod-desc').value);
+  fetch('/api/admin/product', {
+    method: 'POST',
+    body: formData
+  })
   .then(res => res.json())
   .then(data => {
     const msg = document.getElementById('admin-message');
