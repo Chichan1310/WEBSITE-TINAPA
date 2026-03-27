@@ -1,28 +1,61 @@
-# PTL Best Tinapa in Bulacan Website
+# PTL Best Tinapa Website 🚀
 
-## Full-stack simple website with Node.js/Express back-end and HTML/CSS/JS front-end.
+## Full-Stack E-Commerce with CI/CD
 
-### Features:
-- Home, About, Products (API fetched), Contact (form with back-end POST), **Admin** (add products).
-- Responsive design.
-- Products API: GET /api/products
-- Contact API: POST /api/contact (logs to console/contacts.txt)
-- Admin API: POST /api/admin/product (password: admin123)
+**Live Demo:** [Vercel Deploy](https://your-vercel-url.vercel.app)
 
-### Setup & Run:
-1. Ensure Node.js installed (https://nodejs.org)
-2. Open terminal in project root.
-3. Run: `npm install`
-4. Run: `npm start`
-5. Open: http://localhost:3000
+### Features
+- 📱 Responsive modern UI
+- 🐟 Products catalog (API-driven)
+- 📝 Contact form (backend)
+- 🔐 **Admin Dashboard** (CRUD products, password: `admin123`)
+- ✅ **CI/CD**: GitHub Actions + Jest tests + Vercel deploy
 
-### Back-end:
-- server.js: Express server.
-- data/products.json: Sample data.
+### Tech Stack
+```
+Frontend: HTML/CSS/JS
+Backend: Node.js/Express
+Data: JSON file
+Tests: Jest + Supertest
+CI/CD: GitHub Actions → Vercel
+```
 
-### Customization:
-- Edit public/ files for content/design.
-- Add real images, update products.json.
-- Integrate email service for contacts.
+## Quick Start 🏃‍♂️
 
-Enjoy your Tinapa website! 🚀
+```bash
+npm install
+npm start
+# http://localhost:3000
+```
+
+**Dev:** `npm run dev`
+
+**Test:** `npm test` ✅
+
+## Admin Dashboard
+- URL: `/admin.html`
+- Password: `admin123`
+- Features: Add/Edit/Delete products, image upload, search/filter, pagination
+
+## CI/CD Pipeline 🔄
+```
+Push/PR main → GitHub Actions:
+1. npm ci + npm test (Jest)
+2. Tests pass → vercel --prod
+3. Fail → Blocked + error report
+```
+
+**Secrets:** VERCEL_TOKEN + PROJECT_ID in GitHub
+
+## Development
+- Edit `public/` for UI
+- `data/products.json` for products
+- `tests/` for new tests
+- Push → Auto deploy!
+
+## Deployment to Vercel
+1. Connect GitHub repo to Vercel
+2. Add secrets (above)
+3. Push = Live update
+
+Enjoy! 🎣✨
