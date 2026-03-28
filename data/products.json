@@ -1,1 +1,9 @@
-[]
+[
+	{
+		"id": 1,
+		"name": "Sample Tinapa",
+		"price": "100",
+		"description": "Delicious smoked fish.",
+		"image": "/uploads/sample.jpg"
+	}
+]
