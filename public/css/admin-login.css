@@ -114,6 +114,26 @@ body {
   background: url('data:image/svg+xml;utf8,<svg fill="none" stroke="%232563eb" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><ellipse cx="12" cy="12" rx="8" ry="5.5"/><circle cx="12" cy="12" r="2.5"/><line x1="4" y1="20" x2="20" y2="4" stroke="%232563eb" stroke-width="2"/></svg>') center/contain no-repeat;
 }
 
+.back-btn {
+  margin-top: 0.7rem;
+  width: 100%;
+  padding: 0.7rem 0;
+  background: #f1f5f9;
+  color: #2563eb;
+  border: 1.5px solid #2563eb;
+  border-radius: 0.5rem;
+  font-size: 1.02rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.18s, color 0.18s, border 0.18s;
+}
+
+.back-btn:hover, .back-btn:focus {
+  background: #2563eb;
+  color: #fff;
+  border: 1.5px solid #1e40af;
+}
+
 @media (max-width: 500px) {
   .login-card {
     padding: 1.5rem 0.7rem;
