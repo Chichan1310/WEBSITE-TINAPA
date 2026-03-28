@@ -4,19 +4,76 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Admin Dashboard</title>
+  <link rel="stylesheet" href="css/modern-style.css">
   <style>
-    body { font-family: Arial, sans-serif; background: #f4f6fb; margin: 0; }
-    .dashboard-box { max-width: 400px; margin: 8vh auto; background: #fff; border-radius: 10px; box-shadow: 0 2px 16px #0001; padding: 2.5rem 2rem; text-align: center; }
-    .dashboard-box h1 { margin-top: 0; }
-    .dashboard-box button { margin-top: 2rem; padding: 0.7rem 2rem; background: #e11d48; color: #fff; border: none; border-radius: 5px; font-weight: bold; cursor: pointer; }
+    .admin-header { text-align: center; margin-top: 3rem; }
+    .admin-header h1 { font-size: 2.2rem; font-weight: 700; }
+    .admin-header p { color: #475569; margin-bottom: 2rem; }
+    .admin-logout-btn { background: #e11d48; color: #fff; border: none; border-radius: 8px; padding: 0.7rem 2.2rem; font-weight: 600; font-size: 1.1rem; margin-top: 1.2rem; cursor: pointer; transition: background 0.2s; }
+    .admin-logout-btn:hover { background: #be123c; }
+    .admin-section { max-width: 700px; margin: 2.5rem auto; background: #fff; border-radius: 1.2rem; box-shadow: 0 6px 32px rgba(30, 41, 59, 0.07); padding: 2.5rem 2rem; }
+    .admin-section h2 { font-size: 1.3rem; margin-bottom: 1.2rem; }
+    .admin-products-list { margin-top: 2rem; }
+    .admin-product-item { display: flex; align-items: center; gap: 1.2rem; background: #f8fafc; border-radius: 8px; padding: 1rem 1.2rem; margin-bottom: 1rem; }
+    .admin-product-img { width: 60px; height: 60px; object-fit: cover; border-radius: 8px; border: 1px solid #eee; }
+    .admin-product-info { flex: 1; }
+    .admin-product-name { font-weight: 600; }
+    .admin-product-price { color: #FF8C00; font-weight: 600; }
+    .admin-add-btn { background: linear-gradient(135deg, #10b981, #059669); color: #fff; border: none; border-radius: 8px; padding: 0.7rem 2rem; font-weight: 600; font-size: 1rem; cursor: pointer; transition: background 0.2s; }
+    .admin-add-btn:hover { background: linear-gradient(135deg, #059669, #047857); }
+    .admin-form-group { margin-bottom: 1.2rem; }
+    .admin-form-group label { display: block; font-weight: 500; margin-bottom: 0.4rem; }
+    .admin-form-group input, .admin-form-group textarea { width: 100%; padding: 0.8rem; border-radius: 8px; border: 1.5px solid #e2e8f0; font-family: inherit; }
+    .admin-form-group input[type="file"] { padding: 0.3rem; }
+    .admin-form-actions { display: flex; gap: 1rem; justify-content: flex-end; }
+    .admin-form-actions button { min-width: 120px; }
+    .admin-message { text-align: center; margin-top: 1.2rem; font-weight: 500; }
+    .admin-message.success { color: #10b981; }
+    .admin-message.error { color: #e11d48; }
   </style>
 </head>
 <body>
-  <div class="dashboard-box">
+  <div class="admin-header">
+    <div class="logo" style="margin-bottom:1.2rem;"><img src="img/ptl-logo.png" alt="PTL Logo" style="height:2.2em;vertical-align:middle;margin-right:0.5em;"></div>
     <h1>Welcome, Admin!</h1>
-    <p>This is your dashboard. (Add features here.)</p>
-    <button id="logout-btn">Logout</button>
+    <p>Manage your products below.</p>
+    <button class="admin-logout-btn" id="logout-btn">Logout</button>
   </div>
+  <div class="admin-section">
+    <h2>Products</h2>
+    <div id="admin-products-list" class="admin-products-list"></div>
+    <hr style="margin:2.5rem 0;">
+    <h2>Add New Product</h2>
+    <form id="add-product-form" enctype="multipart/form-data">
+      <div class="admin-form-group">
+        <label for="prod-name">Product Name *</label>
+        <input type="text" id="prod-name" name="name" required>
+      </div>
+      <div class="admin-form-group">
+        <label for="prod-price">Price *</label>
+        <input type="text" id="prod-price" name="price" required>
+      </div>
+      <div class="admin-form-group">
+        <label for="prod-image">Product Image *</label>
+        <input type="file" id="prod-image" name="image" accept="image/*" required>
+      </div>
+      <div class="admin-form-group">
+        <label for="prod-desc">Product Description *</label>
+        <textarea id="prod-desc" name="description" required></textarea>
+      </div>
+      <div class="admin-form-group">
+        <label for="prod-stock">Stock *</label>
+        <input type="number" id="prod-stock" name="stock" min="0" value="10" required>
+      </div>
+        <div id="admin-stock-legend" style="margin-top:1rem;font-size:0.98em;color:#e11d48;"></div>
+      <div class="admin-form-actions">
+        <button type="reset" class="admin-add-btn" style="background:#e2e8f0;color:#2d3748;">Cancel</button>
+        <button type="submit" class="admin-add-btn">Add Product</button>
+      </div>
+      <div id="admin-message" class="admin-message"></div>
+    </form>
+  </div>
+  <script src="js/admin-dashboard.js"></script>
   <script>
     if (localStorage.getItem('admin_logged_in') !== '1') {
       window.location.href = 'admin-login.html';
@@ -27,61 +84,4 @@
     };
   </script>
 </body>
-</html>
 
-            <input type="text" id="add-home-prod-name" placeholder="Product Name *" required>
-            <input type="text" id="add-home-prod-price" placeholder="Price *" required>
-            <input type="text" id="add-home-prod-image" placeholder="Image URL or path *" required>
-            <textarea id="add-home-prod-desc" placeholder="Product Description *" required></textarea>
-          </div>
-          <div class="modal-actions">
-            <button type="button" class="modal-btn secondary" onclick="document.getElementById('add-home-prod-modal').style.display='none';">Cancel</button>
-            <button type="submit" class="modal-btn primary">Add Product</button>
-          </div>
-        </form>
-      </div>
-    </div>
-    <!-- Dashboard Overview -->
-    <section class="dashboard-overview">
-      <div class="dashboard-cards">
-        <div class="dashboard-card">
-          <div class="card-title">Total Products</div>
-          <div class="card-value" id="stat-total-products">0</div>
-        </div>
-        <div class="dashboard-card">
-          <div class="card-title">Total Stock</div>
-          <div class="card-value" id="stat-total-stock">0</div>
-        </div>
-        <div class="dashboard-card">
-          <div class="card-title">Low Stock</div>
-          <div class="card-value" id="stat-low-stock">0</div>
-        </div>
-      </div>
-    </section>
-  </div>
-  <div id="product-modal" class="modal">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h2 id="modal-title">Add New Product</h2>
-        <button class="close-modal" onclick="closeModal()">
-          <i class="fas fa-times"></i>
-        </button>
-      </div>
-      <form id="add-product-form" enctype="multipart/form-data">
-        <div class="modal-body">
-          <input type="text" id="prod-name" name="name" placeholder="Product Name *" required>
-          <input type="text" id="prod-price" name="price" placeholder="Price (e.g. ₱250/kg) *" required>
-          <input type="file" id="prod-image" name="image" accept="image/*">
-          <textarea id="prod-desc" name="description" placeholder="Product Description *" required></textarea>
-        </div>
-        <div class="modal-actions">
-          <button type="button" class="modal-btn secondary" onclick="closeModal()">Cancel</button>
-          <button type="submit" class="modal-btn primary" id="add-product-btn">Add Product</button>
-        </div>
-      </form>
-    </div>
-  </div>
-  <script src="js/admin-home-products.js"></script>
-  <script src="js/admin-dashboard.js"></script>
-</body>
-</html>
