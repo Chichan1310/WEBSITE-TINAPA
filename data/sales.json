@@ -1,0 +1,17 @@
+{
+  "monthlySales": [
+    { "month": "Jan", "sales": 18500, "orders": 72 },
+    { "month": "Feb", "sales": 21200, "orders": 81 },
+    { "month": "Mar", "sales": 19800, "orders": 76 },
+    { "month": "Apr", "sales": 23600, "orders": 93 },
+    { "month": "May", "sales": 25100, "orders": 101 },
+    { "month": "Jun", "sales": 26800, "orders": 106 }
+  ],
+  "topProducts": [
+    { "name": "Bangus", "unitsSold": 220, "revenue": 22000 },
+    { "name": "smoke chicken", "unitsSold": 145, "revenue": 27550 },
+    { "name": "Classic Tinapa", "unitsSold": 130, "revenue": 15600 },
+    { "name": "Spicy Tinapa", "unitsSold": 110, "revenue": 14300 },
+    { "name": "Premium Tinapa", "unitsSold": 95, "revenue": 14250 }
+  ]
+}

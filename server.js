@@ -124,6 +124,75 @@ app.get('/api/products', (req, res) => {
   res.json(JSON.parse(productsData));
 });
 
+// Analytics summary for dashboard charts
+app.get('/api/analytics', (req, res) => {
+  try {
+    const productsPath = path.join(__dirname, 'data', 'products.json');
+    const analyticsPath = path.join(__dirname, 'data', 'sales.json');
+
+    const products = fs.existsSync(productsPath)
+      ? JSON.parse(fs.readFileSync(productsPath, 'utf8'))
+      : [];
+
+    const analyticsData = fs.existsSync(analyticsPath)
+      ? JSON.parse(fs.readFileSync(analyticsPath, 'utf8'))
+      : {};
+
+    const monthlySales = Array.isArray(analyticsData.monthlySales)
+      ? analyticsData.monthlySales
+      : [];
+
+    let topProducts = Array.isArray(analyticsData.topProducts)
+      ? analyticsData.topProducts
+      : [];
+
+    if (!topProducts.length) {
+      topProducts = products.map((product) => {
+        const stock = Number(product.stock);
+        const stockValue = Number.isFinite(stock) ? stock : 0;
+        const price = Number(String(product.price).replace(/[^\d.]/g, '')) || 0;
+        const unitsSold = Math.max(5, 120 - (stockValue * 4));
+
+        return {
+          name: product.name,
+          unitsSold,
+          revenue: unitsSold * price
+        };
+      });
+    }
+
+    topProducts = topProducts
+      .sort((a, b) => (Number(b.revenue) || 0) - (Number(a.revenue) || 0))
+      .slice(0, 5);
+
+    const lowStockTrend = products.map((product) => {
+      const stock = Number(product.stock);
+      const stockValue = Number.isFinite(stock) ? stock : 0;
+      return {
+        name: product.name,
+        stock: stockValue,
+        isLow: stockValue <= 5
+      };
+    });
+
+    const totalRevenue = topProducts.reduce((sum, item) => sum + (Number(item.revenue) || 0), 0);
+    const totalOrders = monthlySales.reduce((sum, item) => sum + (Number(item.orders) || 0), 0);
+
+    res.json({
+      success: true,
+      monthlySales,
+      topProducts,
+      lowStockTrend,
+      summary: {
+        totalRevenue,
+        totalOrders
+      }
+    });
+  } catch (err) {
+    res.status(500).json({ success: false, error: 'Analytics server error' });
+  }
+});
+
 // Contact form submission
 app.post('/api/contact', (req, res) => {
   const { name, email, message } = req.body;

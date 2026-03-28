@@ -1,9 +1,9 @@
 [
   {
     "id": 1,
-    "name": "Sample Tinapa",
+    "name": "Bangus",
     "price": "100",
-    "description": "Delicious smoked fish.",
+    "description": "Premium smoked milkfish marinated in traditional spices and slowly smoked for a rich, savory flavor.\r\n\r\n",
     "image": "/uploads/1774698734560-574958145_1203257518517574_5248760032680183721_n.jpg",
     "stock": 10
   },
@@ -11,7 +11,8 @@
     "id": 1774690149690,
     "name": "smoke chicken",
     "price": "190",
-    "description": "sarapp",
-    "image": "/uploads/1774690469480-571175988_1196806809162645_1491257399557988095_n.jpg"
+    "description": "Juicy smoked chicken with a delicious smoky aroma and flavorful seasoning.",
+    "image": "/uploads/1774690469480-571175988_1196806809162645_1491257399557988095_n.jpg",
+    "stock": 5
   }
 ]
