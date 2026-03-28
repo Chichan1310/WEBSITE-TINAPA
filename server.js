@@ -1,12 +1,4 @@
-// Minimal admin products route for test compatibility
-app.get('/api/admin/products', (req, res) => {
-  const pass = req.query.pass;
-  if (!pass) {
-    return res.status(401).json({ success: false, error: 'Unauthorized' });
-  }
-  // Optionally, you can return products if pass is correct, but for now just return empty array for test compatibility
-  res.json([]);
-});
+
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
@@ -29,6 +21,16 @@ const fileUpload = multer({ storage: upload });
 
 const app = express();
 const PORT = 3000;
+
+// Minimal admin products route for test compatibility
+app.get('/api/admin/products', (req, res) => {
+  const pass = req.query.pass;
+  if (!pass) {
+    return res.status(401).json({ success: false, error: 'Unauthorized' });
+  }
+  // Optionally, you can return products if pass is correct, but for now just return empty array for test compatibility
+  res.json([]);
+});
 
 // Middleware
 app.use(cors());
