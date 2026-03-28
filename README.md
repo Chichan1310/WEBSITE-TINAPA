@@ -1,6 +1,6 @@
 # PTL Best Tinapa in Bulacan - Business Website
 
-Professional business website for PTL Best Tinapa in Bulacan, a Filipino smoked fish brand.  
+Professional business website for PTL Best Tinapa in Bulacan, a Filipino smoked fish brand..  
 This project includes a customer-facing site, a protected admin workflow for product management, and an API-backed product catalog.
 
 ## Client Business Overview
