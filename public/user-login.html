@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Login - Tinapa</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/modern-style.css">
+  <style>
+    .user-login-wrap {
+      max-width: 520px;
+      margin: 7rem auto 3rem auto;
+      padding: 2.2rem;
+      background: #ffffff;
+      border-radius: 1.1rem;
+      box-shadow: 0 10px 32px rgba(30, 41, 59, 0.12);
+      border: 1px solid rgba(255, 140, 0, 0.15);
+    }
+    .user-login-wrap h1 {
+      text-align: center;
+      margin-bottom: 0.6rem;
+      color: #8b4513;
+    }
+    .user-login-wrap p {
+      text-align: center;
+      color: #64748b;
+      margin-bottom: 1.6rem;
+      font-size: 0.98rem;
+    }
+    .user-login-wrap label {
+      display: block;
+      font-weight: 600;
+      color: #334155;
+      margin-bottom: 0.45rem;
+      margin-top: 1rem;
+    }
+    .user-login-wrap input {
+      width: 100%;
+      padding: 0.95rem 1rem;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 10px;
+      font-family: inherit;
+      font-size: 1rem;
+    }
+    .user-login-wrap input:focus {
+      outline: none;
+      border-color: #fb923c;
+      box-shadow: 0 0 0 4px rgba(251, 146, 60, 0.18);
+    }
+    .user-login-btn {
+      width: 100%;
+      margin-top: 1.4rem;
+      padding: 1rem 0;
+      border: none;
+      border-radius: 11px;
+      color: #fff;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      background: linear-gradient(135deg, #ff8c00 0%, #8b4513 100%);
+    }
+    .user-login-btn:hover {
+      background: linear-gradient(135deg, #8b4513 0%, #ff8c00 100%);
+    }
+    .user-login-message {
+      margin-top: 1rem;
+      text-align: center;
+      font-weight: 600;
+      min-height: 1.4rem;
+    }
+    .user-login-message.error {
+      color: #e11d48;
+    }
+    .user-login-message.success {
+      color: #059669;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav>
+      <div class="logo"><img src="img/ptl-logo.png" alt="PTL Logo" style="height:2.2em;vertical-align:middle;margin-right:0.5em;">Tinapa</div>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="products.html">Products</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="user-login.html" class="active">User Login</a></li>
+        <li><a href="admin.html">Admin</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="user-login-wrap">
+    <h1>User Login</h1>
+    <p>Log in before placing an order so we can track your purchase details.</p>
+    <form id="user-login-form" autocomplete="on">
+      <label for="user-name">Full Name</label>
+      <input id="user-name" type="text" required placeholder="Juan Dela Cruz">
+
+      <label for="user-email">Email Address</label>
+      <input id="user-email" type="email" required placeholder="you@example.com">
+
+      <label for="user-password">Password</label>
+      <input id="user-password" type="password" required minlength="6" placeholder="At least 6 characters">
+
+      <button type="submit" class="user-login-btn">Login to Continue</button>
+      <div id="user-login-message" class="user-login-message" aria-live="polite"></div>
+    </form>
+  </section>
+
+  <footer>
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3>PTL Best Tinapa</h3>
+          <p>Premier smoked fish from Bulacan. Fresh, flavorful, traditional.</p>
+        </div>
+        <div class="footer-section">
+          <h3>Quick Links</h3>
+          <p><a href="index.html">Home</a></p>
+          <p><a href="about.html">About</a></p>
+          <p><a href="products.html">Products</a></p>
+          <p><a href="contact.html">Contact</a></p>
+        </div>
+        <div class="footer-section">
+          <h3>Contact</h3>
+          <p>Bulacan, Philippines</p>
+          <p>+63 123 456 7890</p>
+          <p>info@ptl-tinapa.ph</p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 PTL Best Tinapa. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/user-login.js"></script>
+</body>
+</html>

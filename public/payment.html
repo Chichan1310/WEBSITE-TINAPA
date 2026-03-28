@@ -9,6 +9,8 @@
   <style>
     .payment-section { max-width: 520px; margin: 6rem auto 3rem auto; background: #fff; border-radius: 1.2rem; box-shadow: 0 6px 32px rgba(30, 41, 59, 0.07); padding: 2.5rem 2rem; }
     .payment-section h1 { text-align: center; margin-bottom: 1.2rem; }
+    .user-session { background: #fff7ed; border: 1px solid #fed7aa; color: #9a3412; border-radius: 10px; padding: 0.9rem 1rem; margin-bottom: 1rem; display: flex; align-items: center; justify-content: space-between; gap: 0.8rem; }
+    .user-session button { background: #9a3412; color: #fff; border: none; border-radius: 8px; padding: 0.45rem 0.8rem; cursor: pointer; font-weight: 600; }
     .payment-section label { font-weight: 500; margin-top: 1.2rem; display: block; }
     .payment-section input, .payment-section select { width: 100%; padding: 1rem; margin-top: 0.3rem; border-radius: 8px; border: 1.5px solid #e2e8f0; margin-bottom: 1.2rem; font-family: inherit; }
     .payment-methods { display: flex; gap: 1.2rem; margin-bottom: 1.2rem; justify-content: center; }
@@ -30,6 +32,7 @@
         <li><a href="about.html">About</a></li>
         <li><a href="products.html">Products</a></li>
         <li><a href="contact.html">Contact</a></li>
+        <li><a href="user-login.html">User Login</a></li>
         <li><a href="payment.html" class="active">Order & Payment</a></li>
         <li><a href="admin.html">Admin</a></li>
       </ul>
@@ -37,6 +40,10 @@
   </header>
   <section class="payment-section">
     <h1>Order & Payment</h1>
+    <div id="user-session" class="user-session" style="display:none;">
+      <span id="user-session-text"></span>
+      <button id="user-logout-btn" type="button">Logout</button>
+    </div>
     <form id="order-form" autocomplete="on">
       <label for="product">Product</label>
       <select id="product" required>
@@ -48,6 +55,8 @@
       <input type="number" id="quantity" min="1" value="1" required>
       <label for="name">Full Name</label>
       <input type="text" id="name" required>
+      <label for="email">Email Address</label>
+      <input type="email" id="email" required>
       <label for="contact">Contact Number</label>
       <input type="text" id="contact" required>
       <label for="address">Delivery Address</label>
@@ -90,6 +99,59 @@
     </div>
   </footer>
   <script>
+    (function () {
+    function getCheckoutUrl() {
+      const currentPath = window.location.pathname.split('/').pop() || 'payment.html';
+      const query = window.location.search || '';
+      return `${currentPath}${query}`;
+    }
+
+    function redirectToLogin() {
+      const target = encodeURIComponent(getCheckoutUrl());
+      window.location.href = `user-login.html?redirect=${target}`;
+    }
+
+    function ensureUserLoggedIn() {
+      if (localStorage.getItem('user_logged_in') !== '1') {
+        redirectToLogin();
+        return false;
+      }
+      return true;
+    }
+
+    function renderUserSession() {
+      const sessionBox = document.getElementById('user-session');
+      const sessionText = document.getElementById('user-session-text');
+      const logoutBtn = document.getElementById('user-logout-btn');
+      const nameInput = document.getElementById('name');
+      const emailInput = document.getElementById('email');
+      const storedName = localStorage.getItem('user_name') || '';
+      const storedEmail = localStorage.getItem('user_email') || '';
+
+      sessionText.textContent = `Logged in as ${storedName || 'Customer'} (${storedEmail || 'No email'})`;
+      sessionBox.style.display = 'flex';
+
+      if (storedName) {
+        nameInput.value = storedName;
+      }
+      if (storedEmail) {
+        emailInput.value = storedEmail;
+      }
+
+      logoutBtn.addEventListener('click', function () {
+        localStorage.removeItem('user_logged_in');
+        localStorage.removeItem('user_name');
+        localStorage.removeItem('user_email');
+        redirectToLogin();
+      });
+    }
+
+    if (!ensureUserLoggedIn()) {
+      return;
+    }
+
+    renderUserSession();
+
     // --- Pre-select product from query string if present ---
     function getQueryParam(name) {
       const url = new URL(window.location.href);
@@ -149,6 +211,7 @@
         document.getElementById('payment-message').innerHTML = '<div class="payment-success">Order placed! You will be contacted for confirmation.</div>';
       }, 1800);
     });
+    })();
   </script>
 </body>
 </html>

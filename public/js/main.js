@@ -1,5 +1,14 @@
 // Common script for all pages
 document.addEventListener('DOMContentLoaded', function() {
+  function isUserLoggedIn() {
+    return localStorage.getItem('user_logged_in') === '1';
+  }
+
+  function redirectToUserLogin(targetUrl) {
+    const loginUrl = `user-login.html?redirect=${encodeURIComponent(targetUrl)}`;
+    window.location.href = loginUrl;
+  }
+
   // Products page: fetch and display products
   const productsGrid = document.getElementById('products-grid');
   const productsLoading = document.getElementById('products-loading');
@@ -37,9 +46,14 @@ document.addEventListener('DOMContentLoaded', function() {
         if (btn) {
           const name = btn.getAttribute('data-product-name');
           const price = btn.getAttribute('data-product-price');
-          // Optionally, you can pass product id as well
-          // const id = btn.getAttribute('data-product-id');
-          window.location.href = `payment.html?product=${name}&price=${price}`;
+          const paymentUrl = `payment.html?product=${name}&price=${price}`;
+
+          if (!isUserLoggedIn()) {
+            redirectToUserLogin(paymentUrl);
+            return;
+          }
+
+          window.location.href = paymentUrl;
         }
       });
     }
