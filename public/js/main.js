@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', function() {
               </div>
               <div class="product-name">${product.name}</div>
               <div class="product-price">${product.price}</div>
-              <button class="add-to-cart" onclick="addToCart(${product.id})">Add to Cart</button>
+              <button class="add-to-cart" data-product-id="${product.id}" data-product-name="${encodeURIComponent(product.name)}" data-product-price="${encodeURIComponent(product.price)}">Add to Cart</button>
             </div>
           `;
           productsGrid.appendChild(div);
@@ -30,6 +30,19 @@ document.addEventListener('DOMContentLoaded', function() {
         productsLoading.textContent = 'Error loading products.';
         console.error(err);
       });
+    // Add to Cart button logic: redirect to payment page with product info
+    if (productsGrid) {
+      productsGrid.addEventListener('click', function(e) {
+        const btn = e.target.closest('.add-to-cart');
+        if (btn) {
+          const name = btn.getAttribute('data-product-name');
+          const price = btn.getAttribute('data-product-price');
+          // Optionally, you can pass product id as well
+          // const id = btn.getAttribute('data-product-id');
+          window.location.href = `payment.html?product=${name}&price=${price}`;
+        }
+      });
+    }
   }
 
   // Contact form handling
