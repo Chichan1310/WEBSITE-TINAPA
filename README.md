@@ -1,157 +1,178 @@
 # PTL Best Tinapa in Bulacan - Business Website
 
-Professional business website for PTL Best Tinapa in Bulacan, a Filipino smoked fish brand..  
-This project includes a customer-facing site, a protected admin workflow for product management, and an API-backed product catalog.
+Professional business website for PTL Best Tinapa in Bulacan, a Filipino smoked fish brand.
+
+This project includes:
+- Customer-facing pages for brand promotion and product ordering
+- Admin dashboard for product management
+- API-backed product and analytics data
+- CI/CD pipeline with automated testing and deployment
 
 ## Client Business Overview
-PTL Best Tinapa in Bulacan is a local food business focused on premium smoked fish products made using traditional Filipino smoking methods.
+PTL Best Tinapa in Bulacan is a local food business focused on premium smoked fish products made through traditional Filipino smoking methods.
 
 ### Business Goals
-- Promote the brand online with a modern, premium visual identity.
-- Showcase available products with images, prices, and descriptions.
-- Let admins manage product listings without editing code.
-- Provide an easy way for customers to contact and order.
+- Promote the brand with a modern and premium website look
+- Showcase products with photos, prices, descriptions, and stock
+- Allow admin updates without editing source code
+- Make customer ordering and contact flow simple
 
 ### Target Users
-- Local customers looking for quality tinapa.
-- Returning buyers who want quick ordering.
-- Business owner/admin managing inventory and product updates.
+- Local customers searching for quality tinapa
+- Returning buyers who want fast ordering
+- Business owner/admin managing product listings and stock
 
-## Website Features
+## Core Features
 
 ### Customer Side
-- Modern homepage with hero, about, gallery, and call-to-action sections.
-- Dynamic product listing powered by API data.
-- User login flow before checkout.
-- Order and payment page with selected product prefill.
-- Contact form submission endpoint.
+- Premium homepage design with hero, about, gallery, and CTA sections
+- Dynamic product listing from API data
+- User login gate before checkout
+- Payment page with selected product prefill
+- Contact form submission API
 
 ### Admin Side
-- Admin login page.
-- Admin dashboard for product CRUD:
-	- Add product with image upload
-	- Edit product details
-	- Delete product
-- Stock indicator and low-stock warning display.
+- Admin login page
+- Modern admin dashboard UI with sidebar navigation
+- Product CRUD (add, edit, delete) with image upload
+- Product search and stock badges
+- Dashboard analytics charts:
+  - Sales trend (monthly)
+  - Top products by revenue
+  - Low stock trend
 
 ## Pages
-- Home: index.html
-- About: about.html
-- Products: products.html
-- Contact: contact.html
-- Payment: payment.html
-- User Login: user-login.html
-- Admin Entry: admin.html (redirects to admin-login.html)
-- Admin Login: admin-login.html
-- Admin Dashboard: admin-dashboard.html
+- Home: `public/index.html`
+- About: `public/about.html`
+- Products: `public/products.html`
+- Contact: `public/contact.html`
+- Payment: `public/payment.html`
+- User Login: `public/user-login.html`
+- Admin Entry: `public/admin.html` (redirects to admin login)
+- Admin Login: `public/admin-login.html`
+- Admin Dashboard: `public/admin-dashboard.html`
 
-## Technology Stack
-- Backend: Node.js, Express
+## Tech Stack
+- Backend: Node.js + Express
 - Frontend: HTML, CSS, Vanilla JavaScript
-- Testing: Jest, Supertest
-- File Uploads: Multer
-- Storage: JSON files and local uploads directory
-- CI/CD: GitHub Actions with Vercel deployment
+- Testing: Jest + Supertest
+- Uploads: Multer
+- Storage: JSON files + local uploads folder
+- CI/CD: GitHub Actions + Vercel
 
 ## Project Structure
-- server.js - Express server and API routes
-- public - Static frontend files (pages, CSS, JS, images, uploads)
-- data/products.json - Main product data used by API
-- data/products-home.json - Additional homepage product data endpoint
-- tests/server.test.js - API tests
-- .github/workflows/ci-cd.yml - CI/CD pipeline
+- `server.js` - Express server and API routes
+- `public/` - Static pages, JS, CSS, images, uploads
+- `data/products.json` - Main product data
+- `data/products-home.json` - Homepage product API data
+- `data/sales.json` - Analytics chart data
+- `tests/server.test.js` - API test suite
+- `.github/workflows/ci-cd.yml` - CI/CD pipeline
 
 ## API Endpoints
 
 ### Public
-- GET /api/products
-	- Returns all products from data/products.json
-- POST /api/contact
-	- Accepts name, email, message and appends to contacts.txt
+- `GET /api/products` - Returns all products
+- `POST /api/contact` - Saves contact form submissions
 
-### Admin
-- GET /api/admin/products?pass=admin123
-	- Returns products if pass is valid
-- POST /api/admin/add-product
-	- Adds new product (multipart form with image)
-- POST /api/admin/edit-product
-	- Updates existing product
-- POST /api/admin/delete-product
-	- Deletes product by id
+### Admin Product Management
+- `GET /api/admin/products?pass=admin123`
+- `POST /api/admin/add-product`
+- `POST /api/admin/edit-product`
+- `POST /api/admin/delete-product`
+
+### Analytics
+- `GET /api/analytics` - Returns chart-ready analytics payload
 
 ### Homepage Products API
-- GET /api/home-products
-- PUT /api/home-products?pass=admin123
+- `GET /api/home-products`
+- `PUT /api/home-products?pass=admin123`
 
 ## Local Setup
 
 1. Install dependencies
 
-	 npm install
+```bash
+npm install
+```
 
-2. Start server
+2. Start the server
 
-	 npm start
+```bash
+npm start
+```
 
-3. Open browser
+3. Open the website
 
-	 http://localhost:3000
+`http://localhost:3000`
 
-### Development mode
+### Development Mode
 
+```bash
 npm run dev
+```
 
-### Run tests
+### Run Tests
 
+```bash
 npm test
+```
 
-## Admin Access (Current Demo Credentials)
-- Username: admin
-- Password: admin123
+## Admin Access (Demo)
+- Username: `admin`
+- Password: `admin123`
 
-Admin login page: /admin-login.html  
-Admin shortcut: /admin.html
+Admin login URL: `/admin-login.html`  
+Admin shortcut URL: `/admin.html`
 
-Important: Credentials are currently hardcoded for demo/school project usage.  
-For production, move auth to secure backend sessions and hashed passwords.
+Note: This auth is currently front-end demo auth. For production, move to secure server-side auth with hashed passwords and sessions.
 
-## Product Management Flow
-1. Admin logs in.
-2. Admin adds, edits, or deletes products in dashboard.
-3. Changes are saved to data/products.json.
-4. Updated products appear on both:
-	 - Homepage products section
-	 - Products page catalog
+## Product Update Flow
+1. Admin logs in
+2. Admin adds/edits/deletes product in dashboard
+3. Server writes updates to `data/products.json`
+4. Changes appear on:
+   - Homepage product section
+   - Products page
 
-## Gallery Image Management
-To add gallery images:
-1. Place image files in public/img.
-2. Use consistent names such as gallery1.jpg, gallery2.jpg, etc.
-3. Update image references in index.html gallery section if filenames differ.
+## Gallery Image Update Guide
+1. Add images to `public/img`
+2. Use consistent names (`gallery1.jpg`, `gallery2.jpg`, etc.)
+3. Update image `src` in `public/index.html` if filenames differ
 
-## CI/CD
-The workflow runs from .github/workflows/ci-cd.yml:
-- On push and pull request to main:
-	- Install dependencies
-	- Run tests
-- On push to main:
-	- Deploy to Vercel
+## CI/CD Pipeline
+Workflow file: `.github/workflows/ci-cd.yml`
+
+Pipeline behavior:
+- On push/PR to `main`: install dependencies and run tests
+- On push to `main`: deploy to Vercel only if tests pass
 
 ### Required GitHub Secrets
-- VERCEL_TOKEN
-- VERCEL_PROJECT_ID
+- `VERCEL_TOKEN`
+- `VERCEL_PROJECT_ID`
 
-## Testing Coverage
-Current tests cover:
+## Web Engineering Requirement Status
+
+### Requirement Checklist
+- CI/CD integrated in existing project: Done
+- Collaborator added and accepted: Done
+- Collaborator can push to main: Done
+- Valid updates auto-reflect on deployed website: Done
+- Failed tests reject deployment: Done
+- Automatic CI feedback on failures (GitHub checks/logs): Done
+
+## Test Coverage
+Current automated tests validate:
 - Products API response
-- Contact form API response
-- Unauthorized admin products access
+- Contact API response
+- Admin unauthorized access behavior
+- Analytics API response
 
-## Notes and Recommendations
-- Uploaded product images are stored in public/uploads.
-- Keep product image sizes optimized for faster loading.
-- Consider adding backend authentication and role-based access for production.
-- Consider moving from JSON file storage to a database for scale.
+## Recommendations
+- Keep uploaded images optimized to improve page speed
+- Add data validation around JSON writes to avoid malformed JSON
+- Move from JSON files to a database for production scale
+- Implement secure backend authentication for admin/user roles
 
 ## Maintainer
 PTL Best Tinapa Website Project  
