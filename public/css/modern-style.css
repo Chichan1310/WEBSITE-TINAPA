@@ -528,6 +528,14 @@ section {
   margin-bottom: 1rem;
 }
 
+.product-description {
+  color: #6b7280;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+  min-height: 3em;
+}
+
 .add-to-cart {
   width: 100%;
   background: linear-gradient(135deg, #10b981, #059669);
