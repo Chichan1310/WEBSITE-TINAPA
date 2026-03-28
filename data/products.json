@@ -13,5 +13,13 @@
     "price": "190",
     "description": "sarapp",
     "image": "/uploads/1774690469480-571175988_1196806809162645_1491257399557988095_n.jpg"
+  },
+  {
+    "id": 9999999999999,
+    "name": "GALUNGGONG TINAPA",
+    "price": "80",
+    "description": "Delicious galunggong tinapa, authentic smoked fish goodness.",
+    "image": "img/ggtinapa.jpg",
+    "stock": 20
   }
 ]
