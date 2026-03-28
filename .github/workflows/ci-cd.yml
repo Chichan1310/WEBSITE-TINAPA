@@ -1,5 +1,9 @@
 name: CI/CD Pipeline
 
+permissions:
+  contents: read
+  pull-requests: write
+
 on:
   push:
     branches: [ main ]
@@ -27,6 +31,40 @@ jobs:
     
     - name: Execute test suite
       run: npm test
+
+  pr-comment:
+    needs: test
+    runs-on: ubuntu-latest
+    if: always() && github.event_name == 'pull_request'
+    steps:
+    - name: PR comment on test failure
+      if: needs.test.result != 'success'
+      continue-on-error: true
+      uses: marocchino/sticky-pull-request-comment@v2
+      with:
+        header: ci-summary
+        message: |
+          ## CI Result: Tests Failed
+          One or more automated checks failed for this pull request.
+
+          ### What to do next
+          - Open the **Actions** tab and check the failed test logs.
+          - Fix the failing code or test.
+          - Push a new commit to run CI again.
+
+          Deployment will remain blocked until the test job passes.
+
+    - name: PR comment on test success
+      if: needs.test.result == 'success'
+      continue-on-error: true
+      uses: marocchino/sticky-pull-request-comment@v2
+      with:
+        header: ci-summary
+        message: |
+          ## CI Result: Tests Passed
+          All automated checks passed for this pull request.
+
+          This update is valid for merge and deployment rules.
 
   deploy:
     needs: test
