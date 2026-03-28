@@ -82,6 +82,38 @@ body {
   box-shadow: 0 4px 16px rgba(37, 99, 235, 0.13);
 }
 
+.password-wrapper {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.toggle-password {
+  background: none;
+  border: none;
+  position: absolute;
+  right: 0.7rem;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  padding: 0.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.eye {
+  width: 22px;
+  height: 22px;
+  display: inline-block;
+  background: url('data:image/svg+xml;utf8,<svg fill="none" stroke="%23475669" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><ellipse cx="12" cy="12" rx="8" ry="5.5"/><circle cx="12" cy="12" r="2.5"/></svg>') center/contain no-repeat;
+  transition: filter 0.2s;
+}
+
+.toggle-password.active .eye {
+  background: url('data:image/svg+xml;utf8,<svg fill="none" stroke="%232563eb" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><ellipse cx="12" cy="12" rx="8" ry="5.5"/><circle cx="12" cy="12" r="2.5"/><line x1="4" y1="20" x2="20" y2="4" stroke="%232563eb" stroke-width="2"/></svg>') center/contain no-repeat;
+}
+
 @media (max-width: 500px) {
   .login-card {
     padding: 1.5rem 0.7rem;

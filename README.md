@@ -94,3 +94,11 @@ git push origin main
 ```
 
 **Ready for demo & grading! Push to see magic ✨**
+
+---
+
+## 🛡️ Admin Login Credentials
+- **Email:** admin@ptl-tinapa.ph
+- **Password:** admin123
+
+Use these credentials to access the admin dashboard at `/admin.html`.

@@ -3,115 +3,30 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin Dashboard - PTL Best Tinapa</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/modern-style.css">
-  <link rel="stylesheet" href="css/admin-dashboard.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <title>Admin Login</title>
+  <link rel="stylesheet" href="css/admin-login.css">
 </head>
 <body>
-  <!-- Login Overlay -->
-  <div id="password-section" class="login-overlay">
-    <div class="login-card">
-      <div class="logo">🐟 Admin Panel</div>
-      <h2>PTL Best Tinapa Admin</h2>
-      <input type="password" id="admin-password" placeholder="Enter password (admin123)">
-      <button onclick="checkPassword()">Enter Dashboard</button>
-    </div>
+  <div class="login-container">
+    <form class="login-card" autocomplete="on">
+      <h2>Admin Login</h2>
+      <div class="input-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" required autocomplete="username">
+      </div>
+      <div class="input-group password-group">
+        <label for="password">Password</label>
+        <div class="password-wrapper">
+          <input type="password" id="password" name="password" required autocomplete="current-password">
+          <button type="button" class="toggle-password" aria-label="Show password" tabindex="-1">
+            <span class="eye"></span>
+          </button>
+        </div>
+      </div>
+      <button type="submit" class="login-btn">Login</button>
+    </form>
   </div>
-
-  <!-- Main Admin Dashboard -->
-  <div id="admin-dashboard" class="admin-dashboard" style="display: none;">
-    <!-- Sidebar -->
-    <aside class="admin-sidebar">
-      <div class="sidebar-logo">
-        <h2><i class="fas fa-fish"></i> Tinapa Admin</h2>
-        <p>Dashboard</p>
-      </div>
-      <nav class="sidebar-nav">
-        <a href="#" class="nav-item active" data-section="products"><i class="fas fa-boxes"></i> Products</a>
-        <a href="#" class="nav-item" data-section="orders"><i class="fas fa-shopping-cart"></i> Orders</a>
-        <a href="#" class="nav-item" data-section="customers"><i class="fas fa-users"></i> Customers</a>
-        <a href="#" class="nav-item" data-section="analytics"><i class="fas fa-chart-line"></i> Analytics</a>
-        <a href="#" class="nav-item" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</a>
-      </nav>
-    </aside>
-
-    <!-- Toggle Sidebar Mobile -->
-    <button class="toggle-sidebar"><i class="fas fa-bars"></i></button>
-
-    <!-- Main Content -->
-    <main class="admin-main">
-      <!-- Header -->
-      <header class="admin-header">
-        <div>
-          <h1 class="admin-title">Product Management</h1>
-          <p>Manage your store products efficiently</p>
-        </div>
-        <button id="add-product-btn" class="add-product-btn">
-          <i class="fas fa-plus"></i> Add Product
-        </button>
-      </header>
-
-      <!-- Controls -->
-      <div class="controls">
-        <input type="text" id="search-input" class="search-input" placeholder="Search products...">
-        <select id="filter-select" class="filter-select">
-          <option value="">All Categories</option>
-          <option value="fish">Fish</option>
-          <option value="meat">Meat</option>
-        </select>
-      </div>
-
-      <!-- Products Table -->
-      <div class="products-table">
-        <div class="table-header">
-          <div>Image</div>
-          <div>Product Name</div>
-          <div>Price</div>
-          <div>Description</div>
-          <div>Status</div>
-          <div>Actions</div>
-        </div>
-        <div class="table-body" id="table-body">
-          <!-- Dynamic content -->
-        </div>
-      </div>
-
-      <!-- Pagination -->
-      <div class="pagination" id="pagination">
-        <!-- Dynamic pagination -->
-      </div>
-
-      <!-- Message -->
-      <div id="admin-message" class="message"></div>
-    </main>
-  </div>
-
-  <!-- Add/Edit Product Modal -->
-  <div id="product-modal" class="modal">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h2 id="modal-title">Add New Product</h2>
-        <button class="close-modal" onclick="closeModal()">
-          <i class="fas fa-times"></i>
-        </button>
-      </div>
-      <form id="add-product-form">
-        <div class="modal-body">
-          <input type="text" id="prod-name" placeholder="Product Name *" required>
-          <input type="text" id="prod-price" placeholder="Price (e.g. ₱250/kg) *" required>
-          <input type="file" id="prod-image" accept="image/*">
-          <textarea id="prod-desc" placeholder="Product Description *" required></textarea>
-        </div>
-        <div class="modal-actions">
-          <button type="button" class="modal-btn secondary" onclick="closeModal()">Cancel</button>
-          <button type="submit" class="modal-btn primary" id="add-product-btn">Add Product</button>
-        </div>
-      </form>
-    </div>
-  </div>
-
-  <script src="js/admin-dashboard.js"></script>
+  <script src="js/admin-login.js"></script>
 </body>
 </html>
+<!-- ...existing login form code remains... -->
