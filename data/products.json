@@ -4,7 +4,8 @@
     "name": "Sample Tinapa",
     "price": "100",
     "description": "Delicious smoked fish.",
-    "image": "/uploads/sample.jpg"
+    "image": "/uploads/1774698734560-574958145_1203257518517574_5248760032680183721_n.jpg",
+    "stock": 10
   },
   {
     "id": 1774690149690,
