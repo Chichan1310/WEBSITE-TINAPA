@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Order & Payment - Tinapa</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/modern-style.css">
+  <style>
+    .payment-section { max-width: 520px; margin: 6rem auto 3rem auto; background: #fff; border-radius: 1.2rem; box-shadow: 0 6px 32px rgba(30, 41, 59, 0.07); padding: 2.5rem 2rem; }
+    .payment-section h1 { text-align: center; margin-bottom: 1.2rem; }
+    .payment-section label { font-weight: 500; margin-top: 1.2rem; display: block; }
+    .payment-section input, .payment-section select { width: 100%; padding: 1rem; margin-top: 0.3rem; border-radius: 8px; border: 1.5px solid #e2e8f0; margin-bottom: 1.2rem; font-family: inherit; }
+    .payment-methods { display: flex; gap: 1.2rem; margin-bottom: 1.2rem; justify-content: center; }
+    .payment-methods label { display: flex; align-items: center; gap: 0.5rem; font-weight: 500; cursor: pointer; margin: 0; }
+    .order-summary { background: #f8fafc; border-radius: 8px; padding: 1.2rem; margin: 1.5rem 0; font-size: 1.05rem; }
+    .pay-btn { width: 100%; background: linear-gradient(135deg, #FF8C00 0%, #8B4513 100%); color: white; border: none; padding: 1.2rem 0; font-size: 1.1rem; font-weight: 600; border-radius: 12px; cursor: pointer; margin-top: 1.2rem; }
+    .pay-btn:hover { background: linear-gradient(135deg, #8B4513 0%, #FF8C00 100%); }
+    .payment-success { color: #059669; text-align: center; font-weight: 600; margin-top: 1.5rem; }
+    .payment-error { color: #e11d48; text-align: center; font-weight: 600; margin-top: 1.5rem; }
+    @media (max-width: 600px) { .payment-section { padding: 1.2rem 0.5rem; } }
+  </style>
+</head>
+<body>
+  <header>
+    <nav>
+      <div class="logo">😎 Tinapa</div>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="products.html">Products</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="payment.html" class="active">Order & Payment</a></li>
+        <li><a href="admin.html">Admin</a></li>
+      </ul>
+    </nav>
+  </header>
+  <section class="payment-section">
+    <h1>Order & Payment</h1>
+    <form id="order-form" autocomplete="on">
+      <label for="product">Product</label>
+      <select id="product" required>
+        <option value="Classic Tinapa" data-price="120">Classic Tinapa - ₱120/pack</option>
+        <option value="Spicy Tinapa" data-price="130">Spicy Tinapa - ₱130/pack</option>
+        <option value="Premium Tinapa" data-price="150">Premium Tinapa - ₱150/pack</option>
+      </select>
+      <label for="quantity">Quantity</label>
+      <input type="number" id="quantity" min="1" value="1" required>
+      <label for="name">Full Name</label>
+      <input type="text" id="name" required>
+      <label for="contact">Contact Number</label>
+      <input type="text" id="contact" required>
+      <label for="address">Delivery Address</label>
+      <input type="text" id="address" required>
+      <div class="payment-methods">
+        <label><input type="radio" name="payment" value="gcash" checked> <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/GCash_logo.svg" alt="GCash" style="height:24px;vertical-align:middle;"> GCash</label>
+        <label><input type="radio" name="payment" value="maya"> <img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Maya_Logo_2022.svg" alt="Maya" style="height:24px;vertical-align:middle;"> Maya</label>
+        <label><input type="radio" name="payment" value="card"> <span style="font-size:1.2em;">💳</span> Card</label>
+      </div>
+      <div id="payment-fields">
+        <!-- Dynamic payment fields here -->
+      </div>
+      <div class="order-summary" id="order-summary"></div>
+      <button type="submit" class="pay-btn">Place Order & Pay</button>
+      <div id="payment-message"></div>
+    </form>
+  </section>
+  <footer>
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3>PTL Best Tinapa</h3>
+          <p>Premier smoked fish from Bulacan. Fresh, flavorful, traditional.</p>
+        </div>
+        <div class="footer-section">
+          <h3>Quick Links</h3>
+          <p><a href="index.html">Home</a></p>
+          <p><a href="about.html">About</a></p>
+          <p><a href="products.html">Products</a></p>
+          <p><a href="contact.html">Contact</a></p>
+        </div>
+        <div class="footer-section">
+          <h3>Contact</h3>
+          <p>📍 Bulacan, Philippines</p>
+          <p>📞 +63 123 456 7890</p>
+          <p>✉️ info@ptl-tinapa.ph</p>
+        </div>
+      </div>
+      <div class="footer-bottom">&copy; 2026 PTL Best Tinapa. All rights reserved.</div>
+    </div>
+  </footer>
+  <script>
+    // --- Pre-select product from query string if present ---
+    function getQueryParam(name) {
+      const url = new URL(window.location.href);
+      return url.searchParams.get(name);
+    }
+    const preProduct = getQueryParam('product');
+    const prePrice = getQueryParam('price');
+    if (preProduct) {
+      const productSelect = document.getElementById('product');
+      for (let i = 0; i < productSelect.options.length; i++) {
+        if (productSelect.options[i].value === decodeURIComponent(preProduct)) {
+          productSelect.selectedIndex = i;
+          // If price is present, update data-price
+          if (prePrice) {
+            productSelect.options[i].dataset.price = decodeURIComponent(prePrice).replace(/[^\d]/g, '');
+          }
+          break;
+        }
+      }
+    }
+    function updatePaymentFields() {
+      const payment = document.querySelector('input[name="payment"]:checked').value;
+      const fields = document.getElementById('payment-fields');
+      if (payment === 'gcash') {
+        fields.innerHTML = '<label for="gcash-num">GCash Number</label><input type="text" id="gcash-num" required placeholder="09xxxxxxxxx">';
+      } else if (payment === 'maya') {
+        fields.innerHTML = '<label for="maya-num">Maya Number</label><input type="text" id="maya-num" required placeholder="09xxxxxxxxx">';
+      } else if (payment === 'card') {
+        fields.innerHTML = '<label for="card-num">Card Number</label><input type="text" id="card-num" required placeholder="Card Number"><label for="card-exp">Expiry</label><input type="text" id="card-exp" required placeholder="MM/YY"><label for="card-cvc">CVC</label><input type="text" id="card-cvc" required placeholder="CVC">';
+      }
+    }
+    document.querySelectorAll('input[name="payment"]').forEach(el => el.addEventListener('change', updatePaymentFields));
+    updatePaymentFields();
+    // Order summary
+    function updateSummary() {
+      const product = document.getElementById('product');
+      const price = parseInt(product.options[product.selectedIndex].dataset.price, 10);
+      const quantity = parseInt(document.getElementById('quantity').value, 10) || 1;
+      const total = price * quantity;
+      document.getElementById('order-summary').innerHTML = `<b>Order:</b> ${product.value} x ${quantity}<br><b>Total:</b> ₱${total}`;
+    }
+    document.getElementById('product').addEventListener('change', updateSummary);
+    document.getElementById('quantity').addEventListener('input', updateSummary);
+    // If pre-selected, update summary after setting product
+    setTimeout(updateSummary, 0);
+    // Form submit
+    document.getElementById('order-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      document.querySelector('.pay-btn').disabled = true;
+      document.getElementById('payment-message').textContent = 'Processing order...';
+      setTimeout(() => {
+        document.getElementById('payment-message').textContent = '';
+        document.querySelector('.pay-btn').disabled = false;
+        document.getElementById('order-form').reset();
+        updatePaymentFields();
+        updateSummary();
+        document.getElementById('payment-message').innerHTML = '<div class="payment-success">Order placed! You will be contacted for confirmation.</div>';
+      }, 1800);
+    });
+  </script>
+</body>
+</html>

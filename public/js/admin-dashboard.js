@@ -1,103 +1,148 @@
-// Advanced Admin Dashboard JS
-let products = [];
-let filteredProducts = [];
-let currentPage = 1;
-const ITEMS_PER_PAGE = 8;
-let isEditing = false;
-let editingId = null;
-const ADMIN_PASS = 'admin123';
-
+// Modern Admin Dashboard JS
 document.addEventListener('DOMContentLoaded', function() {
-  // Load products
-  loadProducts();
-  
-  // Event listeners
-  document.getElementById('admin-password').addEventListener('keypress', function(e) {
-    if (e.key === 'Enter') checkPassword();
-  });
-  
-  document.getElementById('search-input').addEventListener('input', filterProducts);
-  document.getElementById('filter-select').addEventListener('change', filterProducts);
-  
-  document.getElementById('add-product-form').addEventListener('submit', handleFormSubmit);
-  
-  // Mobile sidebar toggle
-  document.querySelector('.toggle-sidebar')?.addEventListener('click', toggleSidebar);
-});
-
-async function loadProducts() {
-  try {
-    const res = await fetch(`/api/admin/products?pass=${ADMIN_PASS}`);
-
-    
-    if (data.success) {
-      showMessage('Product deleted!');
-      loadProducts();
-    } else {
-      showMessage(data.error || 'Delete failed', 'error');
-    }
-  } catch (err) {
-    showMessage('Delete error', 'error');
+  function loadProducts() {
+    fetch('/api/products')
+      .then(res => res.json())
+      .then(products => {
+        const list = document.getElementById('admin-products-list');
+        const legend = document.getElementById('admin-stock-legend');
+        if (!list) return;
+        list.innerHTML = '';
+        let lowStockCount = 0;
+        if (!products.length) {
+          list.innerHTML = '<div style="text-align:center;color:#aaa;">No products yet.</div>';
+          legend.textContent = '';
+          return;
+        }
+        products.forEach(prod => {
+          const isLowStock = prod.stock !== undefined && prod.stock <= 5;
+          if (isLowStock) lowStockCount++;
+          const div = document.createElement('div');
+          div.className = 'admin-product-item';
+          div.innerHTML = `
+            <img src="${prod.image || '/uploads/no-image.png'}" class="admin-product-img" alt="${prod.name}">
+            <div class="admin-product-info">
+              <div class="admin-product-name">${prod.name}</div>
+              <div class="admin-product-price">₱${prod.price}</div>
+              <div style="color:#718096;font-size:0.95em;">${prod.description || ''}</div>
+              <div style="margin-top:0.5em;font-size:0.98em;${isLowStock ? 'color:#e11d48;font-weight:600;' : 'color:#059669;'}">
+                Stock: ${prod.stock !== undefined ? prod.stock : 'N/A'}
+                ${isLowStock ? ' <span style="margin-left:0.5em;">Low stock!</span>' : ''}
+              </div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:0.5rem;">
+              <button class="admin-edit-btn" data-id="${prod.id}" style="background:#fbbf24;color:#fff;border:none;border-radius:6px;padding:0.3rem 0.8rem;font-size:0.95em;cursor:pointer;">Edit</button>
+              <button class="admin-delete-btn" data-id="${prod.id}" style="background:#e11d48;color:#fff;border:none;border-radius:6px;padding:0.3rem 0.8rem;font-size:0.95em;cursor:pointer;">Delete</button>
+            </div>
+          `;
+          list.appendChild(div);
+        });
+        legend.textContent = lowStockCount > 0 ? `Warning: ${lowStockCount} product(s) are low on stock (≤ 5).` : '';
+        // Attach edit/delete listeners
+        document.querySelectorAll('.admin-edit-btn').forEach(btn => btn.addEventListener('click', handleEditProduct));
+        document.querySelectorAll('.admin-delete-btn').forEach(btn => btn.addEventListener('click', handleDeleteProduct));
+      });
   }
+      document.querySelectorAll('.admin-edit-btn').forEach(btn => btn.addEventListener('click', handleEditProduct));
+      document.querySelectorAll('.admin-delete-btn').forEach(btn => btn.addEventListener('click', handleDeleteProduct));
+    });
 }
+let editingProductId = null;
 
-function resetForm() {
-  document.getElementById('add-product-form').reset();
-  isEditing = false;
-  editingId = null;
-  document.getElementById('modal-title').textContent = 'Add New Product';
-  document.getElementById('add-product-btn').textContent = 'Add Product';
-}
-
-function openModal() {
-  document.getElementById('product-modal').classList.add('active');
-}
-
-function closeModal() {
-  document.getElementById('product-modal').classList.remove('active');
-  resetForm();
-}
-
-function toggleSidebar() {
-  document.querySelector('.admin-sidebar').classList.toggle('sidebar-open');
-}
-
-// Close modal on outside click
-document.getElementById('product-modal').addEventListener('click', function(e) {
-  if (e.target === this) closeModal();
-});
-
-// Add product button
-document.getElementById('add-product-btn').addEventListener('click', openModal);
-
-// Message styles
-const style = document.createElement('style');
-style.textContent = `
-  .message {
-    opacity: 0;
-    transition: opacity 0.3s;
-  }
-  .message.error { color: #ef4444; }
-  .message.success { color: #10b981; }
-`;
-document.head.appendChild(style);
-
-// Dashboard statistics updater
-function updateDashboardStats() {
-  fetch('/api/admin/products?pass=admin123')
+function handleEditProduct(e) {
+  const id = e.target.getAttribute('data-id');
+  fetch('/api/products')
     .then(res => res.json())
     .then(products => {
-      document.getElementById('stat-total-products').textContent = products.length;
-      let totalStock = 0, lowStock = 0;
-      products.forEach(p => {
-        const stock = parseInt(p.stock || 0, 10);
-        totalStock += stock;
-        if (stock <= 5) lowStock++;
-      });
-      document.getElementById('stat-total-stock').textContent = totalStock;
-      document.getElementById('stat-low-stock').textContent = lowStock;
+      const prod = products.find(p => String(p.id) === String(id));
+      if (!prod) return;
+      document.getElementById('prod-name').value = prod.name;
+      document.getElementById('prod-price').value = prod.price;
+      document.getElementById('prod-desc').value = prod.description;
+      document.getElementById('prod-stock').value = prod.stock !== undefined ? prod.stock : 10;
+      editingProductId = prod.id;
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     });
 }
 
-document.addEventListener('DOMContentLoaded', updateDashboardStats);
+function handleDeleteProduct(e) {
+  const id = e.target.getAttribute('data-id');
+  if (!confirm('Delete this product?')) return;
+  fetch('/api/admin/delete-product', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ id })
+  })
+    .then(res => res.json())
+    .then(data => {
+      const msg = document.getElementById('admin-message');
+      if (data.success) {
+        msg.textContent = 'Product deleted!';
+        msg.className = 'admin-message success';
+        loadProducts();
+      } else {
+        msg.textContent = data.error || 'Error deleting product.';
+        msg.className = 'admin-message error';
+      }
+    })
+    .catch(() => {
+      const msg = document.getElementById('admin-message');
+      msg.textContent = 'Error deleting product.';
+      msg.className = 'admin-message error';
+    });
+}
+
+function handleAddProduct(e) {
+  e.preventDefault();
+  const form = document.getElementById('add-product-form');
+  const formData = new FormData(form);
+  const msg = document.getElementById('admin-message');
+  msg.textContent = editingProductId ? 'Saving...' : 'Uploading...';
+  msg.className = 'admin-message';
+  if (editingProductId) {
+    formData.append('id', editingProductId);
+    fetch('/api/admin/edit-product', {
+      method: 'POST',
+      body: formData
+    })
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          msg.textContent = 'Product updated!';
+          msg.className = 'admin-message success';
+          form.reset();
+          editingProductId = null;
+          loadProducts();
+        } else {
+          msg.textContent = data.error || 'Error updating product.';
+          msg.className = 'admin-message error';
+        }
+      })
+      .catch(() => {
+        msg.textContent = 'Error updating product.';
+        msg.className = 'admin-message error';
+      });
+  } else {
+    fetch('/api/admin/add-product', {
+      method: 'POST',
+      body: formData
+    })
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          msg.textContent = 'Product added!';
+          msg.className = 'admin-message success';
+          form.reset();
+          loadProducts();
+        } else {
+          msg.textContent = data.error || 'Error adding product.';
+          msg.className = 'admin-message error';
+        }
+      })
+      .catch(() => {
+        msg.textContent = 'Error uploading product.';
+        msg.className = 'admin-message error';
+      });
+  }
+}
 
