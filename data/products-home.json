@@ -16,5 +16,11 @@
     "name": "Premium Tinapa",
     "price": "₱150 / pack",
     "description": "Hand-selected, large milkfish, smoked to perfection for special occasions."
+  },
+  {
+    "image": "img/ggtinapa.jpg",
+    "name": "GALUNGGONG TINAPA",
+    "price": "₱80 / pack",
+    "description": "Authentic galunggong tinapa, savory and smoky."
   }
 ]
