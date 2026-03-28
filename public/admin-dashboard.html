@@ -3,101 +3,32 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin Dashboard - PTL Best Tinapa</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/modern-style.css">
-  <link rel="stylesheet" href="css/admin-dashboard.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <title>Admin Dashboard</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #f4f6fb; margin: 0; }
+    .dashboard-box { max-width: 400px; margin: 8vh auto; background: #fff; border-radius: 10px; box-shadow: 0 2px 16px #0001; padding: 2.5rem 2rem; text-align: center; }
+    .dashboard-box h1 { margin-top: 0; }
+    .dashboard-box button { margin-top: 2rem; padding: 0.7rem 2rem; background: #e11d48; color: #fff; border: none; border-radius: 5px; font-weight: bold; cursor: pointer; }
+  </style>
 </head>
 <body>
-  <div class="admin-dashboard">
-    <aside class="admin-sidebar">
-      <div class="sidebar-logo">
-        <h2><i class="fas fa-fish"></i> Tinapa Admin</h2>
-        <p>Dashboard</p>
-      </div>
-      <nav class="sidebar-nav">
-        <a href="#" class="nav-item active" data-section="products"><i class="fas fa-boxes"></i> Products</a>
-        <a href="#" class="nav-item" data-section="orders"><i class="fas fa-shopping-cart"></i> Orders</a>
-        <a href="#" class="nav-item" data-section="customers"><i class="fas fa-users"></i> Customers</a>
-        <a href="#" class="nav-item" data-section="analytics"><i class="fas fa-chart-line"></i> Analytics</a>
-        <a href="#" class="nav-item" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</a>
-      </nav>
-    </aside>
-    <button class="toggle-sidebar"><i class="fas fa-bars"></i></button>
-    <main class="admin-main">
-      <header class="admin-header">
-        <div>
-          <h1 class="admin-title">Product Management</h1>
-          <p>Manage your store products efficiently</p>
-        </div>
-        <button id="add-product-btn" class="add-product-btn">
-          <i class="fas fa-plus"></i> Add Product
-        </button>
-      </header>
-      <div class="controls">
-        <input type="text" id="search-input" class="search-input" placeholder="Search products...">
-        <select id="filter-select" class="filter-select">
-          <option value="">All Categories</option>
-          <option value="fish">Fish</option>
-          <option value="meat">Meat</option>
-        </select>
-      </div>
-      <div class="products-table">
-        <div class="table-header">
-          <div>Image</div>
-          <div>Product Name</div>
-          <div>Price</div>
-          <div>Description</div>
-          <div>Status</div>
-          <div>Actions</div>
-        </div>
-        <div class="table-body" id="table-body">
-          <!-- Dynamic content -->
-        </div>
-      </div>
-      <div class="pagination" id="pagination">
-        <!-- Dynamic pagination -->
-      </div>
-      <div id="admin-message" class="message"></div>
-    </main>
-    <!-- Homepage Products Management -->
-    <section class="homepage-products-admin" style="margin-top:2.5rem;">
-      <h2>Homepage Products</h2>
-      <div id="homepage-products-list"></div>
-      <button id="add-home-product-btn" class="add-product-btn" style="margin-top:1rem;"><i class="fas fa-plus"></i> Add Homepage Product</button>
-    </section>
-    <!-- Edit Homepage Product Modal -->
-    <div id="edit-home-prod-modal" class="modal" style="display:none;">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h2>Edit Homepage Product</h2>
-          <button class="close-modal" onclick="document.getElementById('edit-home-prod-modal').style.display='none';"><i class="fas fa-times"></i></button>
-        </div>
-        <form id="edit-home-prod-form">
-          <div class="modal-body">
-            <input type="text" id="edit-home-prod-name" placeholder="Product Name *" required>
-            <input type="text" id="edit-home-prod-price" placeholder="Price *" required>
-            <input type="text" id="edit-home-prod-image" placeholder="Image URL or path *" required>
-            <textarea id="edit-home-prod-desc" placeholder="Product Description *" required></textarea>
-            <input type="hidden" id="edit-home-prod-idx">
-          </div>
-          <div class="modal-actions">
-            <button type="button" class="modal-btn secondary" onclick="document.getElementById('edit-home-prod-modal').style.display='none';">Cancel</button>
-            <button type="submit" class="modal-btn primary">Save Changes</button>
-          </div>
-        </form>
-      </div>
-    </div>
-    <!-- Add Homepage Product Modal -->
-    <div id="add-home-prod-modal" class="modal" style="display:none;">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h2>Add Homepage Product</h2>
-          <button class="close-modal" onclick="document.getElementById('add-home-prod-modal').style.display='none';"><i class="fas fa-times"></i></button>
-        </div>
-        <form id="add-home-prod-form">
-          <div class="modal-body">
+  <div class="dashboard-box">
+    <h1>Welcome, Admin!</h1>
+    <p>This is your dashboard. (Add features here.)</p>
+    <button id="logout-btn">Logout</button>
+  </div>
+  <script>
+    if (localStorage.getItem('admin_logged_in') !== '1') {
+      window.location.href = 'admin-login.html';
+    }
+    document.getElementById('logout-btn').onclick = function() {
+      localStorage.removeItem('admin_logged_in');
+      window.location.href = 'admin-login.html';
+    };
+  </script>
+</body>
+</html>
+
             <input type="text" id="add-home-prod-name" placeholder="Product Name *" required>
             <input type="text" id="add-home-prod-price" placeholder="Price *" required>
             <input type="text" id="add-home-prod-image" placeholder="Image URL or path *" required>

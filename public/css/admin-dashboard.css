@@ -1,23 +1,4 @@
-/* Modern Admin Dashboard CSS */
-.admin-dashboard {
-  display: flex;
-  min-height: 100vh;
-  background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%), 
-              url('../uploads/1774593074363-571175988_1196806809162645_1491257399557988095_n.jpg');
-  background-size: cover;
-  background-position: center;
-  background-attachment: fixed;
-}
 
-.admin-sidebar {
-  width: 260px;
-  background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
-  color: white;
-  padding: 2rem 0;
-  box-shadow: 2px 0 10px rgba(0,0,0,0.1);
-  position: fixed;
-  height: 100vh;
-  left: 0;
   top: 0;
   z-index: 100;
 }

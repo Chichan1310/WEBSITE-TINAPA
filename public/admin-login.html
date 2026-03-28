@@ -1,31 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin Login</title>
-  <link rel="stylesheet" href="css/admin-login.css">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Admin Login</title>
+	<style>
+		body { font-family: Arial, sans-serif; background: #f4f6fb; display: flex; align-items: center; justify-content: center; height: 100vh; margin: 0; }
+		.login-box { background: #fff; padding: 2rem 2.5rem; border-radius: 10px; box-shadow: 0 2px 16px #0001; min-width: 320px; }
+		.login-box h2 { margin-top: 0; }
+		.login-box label { display: block; margin: 1rem 0 0.25rem; }
+		.login-box input { width: 100%; padding: 0.5rem; border: 1px solid #bbb; border-radius: 5px; }
+		.login-box button { margin-top: 1.5rem; width: 100%; padding: 0.7rem; background: #2563eb; color: #fff; border: none; border-radius: 5px; font-weight: bold; cursor: pointer; }
+		.login-box .error { color: #e11d48; margin-top: 1rem; text-align: center; }
+	</style>
 </head>
 <body>
-  <div class="login-container">
-    <form class="login-card" autocomplete="on">
-      <h2>Admin Login</h2>
-      <div class="input-group">
-        <label for="email">Email</label>
-        <input type="email" id="email" name="email" required autocomplete="username">
-      </div>
-      <div class="input-group password-group">
-        <label for="password">Password</label>
-        <div class="password-wrapper">
-          <input type="password" id="password" name="password" required autocomplete="current-password">
-          <button type="button" class="toggle-password" aria-label="Show password" tabindex="-1">
-            <span class="eye"></span>
-          </button>
-        </div>
-      </div>
-      <button type="submit" class="login-btn">Login</button>
-    </form>
-  </div>
-  <script src="js/admin-login.js"></script>
+	<form class="login-box" id="admin-login-form" autocomplete="off">
+		<h2>Admin Login</h2>
+		<label for="username">Username</label>
+		<input type="text" id="username" required autofocus>
+		<label for="password">Password</label>
+		<input type="password" id="password" required>
+		<button type="submit">Login</button>
+		<div class="error" id="login-error" style="display:none;"></div>
+	</form>
+	<script>
+		document.getElementById('admin-login-form').addEventListener('submit', function(e) {
+			e.preventDefault();
+			const user = document.getElementById('username').value.trim();
+			const pass = document.getElementById('password').value;
+			if (user === 'admin' && pass === 'admin123') {
+				localStorage.setItem('admin_logged_in', '1');
+				window.location.href = 'admin-dashboard.html';
+			} else {
+				document.getElementById('login-error').textContent = 'Invalid username or password.';
+				document.getElementById('login-error').style.display = 'block';
+			}
+		});
+	</script>
 </body>
 </html>
+
