@@ -3,85 +3,795 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin Dashboard</title>
-  <link rel="stylesheet" href="css/modern-style.css">
+  <title>Admin Dashboard - PTL Best Tinapa</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    .admin-header { text-align: center; margin-top: 3rem; }
-    .admin-header h1 { font-size: 2.2rem; font-weight: 700; }
-    .admin-header p { color: #475569; margin-bottom: 2rem; }
-    .admin-logout-btn { background: #e11d48; color: #fff; border: none; border-radius: 8px; padding: 0.7rem 2.2rem; font-weight: 600; font-size: 1.1rem; margin-top: 1.2rem; cursor: pointer; transition: background 0.2s; }
-    .admin-logout-btn:hover { background: #be123c; }
-    .admin-section { max-width: 700px; margin: 2.5rem auto; background: #fff; border-radius: 1.2rem; box-shadow: 0 6px 32px rgba(30, 41, 59, 0.07); padding: 2.5rem 2rem; }
-    .admin-section h2 { font-size: 1.3rem; margin-bottom: 1.2rem; }
-    .admin-products-list { margin-top: 2rem; }
-    .admin-product-item { display: flex; align-items: center; gap: 1.2rem; background: #f8fafc; border-radius: 8px; padding: 1rem 1.2rem; margin-bottom: 1rem; }
-    .admin-product-img { width: 60px; height: 60px; object-fit: cover; border-radius: 8px; border: 1px solid #eee; }
-    .admin-product-info { flex: 1; }
-    .admin-product-name { font-weight: 600; }
-    .admin-product-price { color: #FF8C00; font-weight: 600; }
-    .admin-add-btn { background: linear-gradient(135deg, #10b981, #059669); color: #fff; border: none; border-radius: 8px; padding: 0.7rem 2rem; font-weight: 600; font-size: 1rem; cursor: pointer; transition: background 0.2s; }
-    .admin-add-btn:hover { background: linear-gradient(135deg, #059669, #047857); }
-    .admin-form-group { margin-bottom: 1.2rem; }
-    .admin-form-group label { display: block; font-weight: 500; margin-bottom: 0.4rem; }
-    .admin-form-group input, .admin-form-group textarea { width: 100%; padding: 0.8rem; border-radius: 8px; border: 1.5px solid #e2e8f0; font-family: inherit; }
-    .admin-form-group input[type="file"] { padding: 0.3rem; }
-    .admin-form-actions { display: flex; gap: 1rem; justify-content: flex-end; }
-    .admin-form-actions button { min-width: 120px; }
-    .admin-message { text-align: center; margin-top: 1.2rem; font-weight: 500; }
-    .admin-message.success { color: #10b981; }
-    .admin-message.error { color: #e11d48; }
+    :root {
+      --bg: #f3f4f6;
+      --panel: #ffffff;
+      --sidebar: #1f2937;
+      --sidebar-muted: #9ca3af;
+      --text: #111827;
+      --subtext: #6b7280;
+      --accent: #f97316;
+      --accent-2: #fb923c;
+      --danger: #dc2626;
+      --success: #16a34a;
+      --radius: 16px;
+      --shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    .admin-shell {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 260px 1fr;
+    }
+
+    .admin-sidebar {
+      background: linear-gradient(180deg, #111827 0%, #1f2937 100%);
+      color: #fff;
+      padding: 1.5rem 1rem;
+      border-right: 1px solid rgba(255, 255, 255, 0.07);
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+      padding: 0.45rem 0.4rem 1rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .brand img {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      object-fit: cover;
+    }
+
+    .brand h2 {
+      margin: 0;
+      font-size: 0.98rem;
+      line-height: 1.25;
+      font-weight: 700;
+    }
+
+    .side-nav {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+      margin-top: 0.7rem;
+    }
+
+    .side-nav a,
+    .side-nav button {
+      border: none;
+      background: transparent;
+      color: #fff;
+      text-decoration: none;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      padding: 0.72rem 0.74rem;
+      border-radius: 12px;
+      cursor: pointer;
+      font: inherit;
+      font-weight: 500;
+      transition: background 0.2s ease, transform 0.2s ease;
+      text-align: left;
+    }
+
+    .side-nav a svg,
+    .side-nav button svg {
+      width: 18px;
+      height: 18px;
+      color: var(--sidebar-muted);
+      flex-shrink: 0;
+    }
+
+    .side-nav a:hover,
+    .side-nav button:hover,
+    .side-nav a.active {
+      background: rgba(249, 115, 22, 0.16);
+      transform: translateX(2px);
+    }
+
+    .side-nav a:hover svg,
+    .side-nav button:hover svg,
+    .side-nav a.active svg {
+      color: var(--accent-2);
+    }
+
+    .admin-main {
+      padding: 1.5rem;
+      display: grid;
+      gap: 1.25rem;
+      align-content: start;
+    }
+
+    .admin-topbar {
+      background: var(--panel);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 1.2rem 1.4rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      position: sticky;
+      top: 0.8rem;
+      z-index: 10;
+    }
+
+    .admin-topbar h1 {
+      margin: 0;
+      font-size: 1.45rem;
+    }
+
+    .admin-topbar p {
+      margin: 0.2rem 0 0;
+      color: var(--subtext);
+      font-size: 0.93rem;
+    }
+
+    .logout-btn {
+      border: none;
+      border-radius: 12px;
+      background: #ef4444;
+      color: #fff;
+      padding: 0.62rem 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      transition: transform 0.2s ease, background 0.2s ease;
+    }
+
+    .logout-btn:hover {
+      background: #dc2626;
+      transform: translateY(-1px);
+    }
+
+    .panel {
+      background: var(--panel);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 1.2rem;
+    }
+
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.9rem;
+    }
+
+    .stat {
+      background: #fff7ed;
+      border: 1px solid #fed7aa;
+      border-radius: 12px;
+      padding: 0.95rem;
+    }
+
+    .stat h3 {
+      margin: 0;
+      color: #9a3412;
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+
+    .stat p {
+      margin: 0.35rem 0 0;
+      font-size: 1.45rem;
+      font-weight: 700;
+      color: #7c2d12;
+    }
+
+    .analytics-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.9rem;
+      margin-top: 0.9rem;
+    }
+
+    .chart-card {
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      padding: 0.85rem;
+      background: #fff;
+      box-shadow: 0 3px 10px rgba(15, 23, 42, 0.05);
+    }
+
+    .chart-card h3 {
+      margin: 0 0 0.45rem;
+      font-size: 0.95rem;
+      color: #374151;
+      font-weight: 600;
+    }
+
+    .chart-wrap {
+      height: 220px;
+      position: relative;
+    }
+
+    .panel-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .panel-head h2 {
+      margin: 0;
+      font-size: 1.25rem;
+    }
+
+    .search-wrap {
+      position: relative;
+      width: min(340px, 100%);
+    }
+
+    .search-wrap input {
+      width: 100%;
+      border: 1.5px solid #e5e7eb;
+      border-radius: 11px;
+      padding: 0.68rem 0.8rem;
+      font: inherit;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .search-wrap input:focus {
+      outline: none;
+      border-color: var(--accent-2);
+      box-shadow: 0 0 0 4px rgba(249, 115, 22, 0.15);
+    }
+
+    .admin-products-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1rem;
+    }
+
+    .admin-product-item {
+      border: 1px solid #e5e7eb;
+      border-radius: 14px;
+      background: #fff;
+      box-shadow: 0 4px 12px rgba(15, 23, 42, 0.05);
+      overflow: hidden;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      display: grid;
+      grid-template-rows: 170px auto;
+    }
+
+    .admin-product-item:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 26px rgba(15, 23, 42, 0.12);
+    }
+
+    .admin-product-img {
+      width: 100%;
+      height: 170px;
+      object-fit: cover;
+      background: #f3f4f6;
+    }
+
+    .admin-product-body {
+      padding: 0.9rem;
+      display: grid;
+      gap: 0.52rem;
+    }
+
+    .admin-product-name {
+      margin: 0;
+      font-size: 1.05rem;
+      font-weight: 700;
+      line-height: 1.25;
+    }
+
+    .admin-product-price {
+      margin: 0;
+      color: #ea580c;
+      font-weight: 700;
+    }
+
+    .admin-product-desc {
+      margin: 0;
+      color: #6b7280;
+      font-size: 0.92rem;
+      line-height: 1.5;
+      min-height: 2.8em;
+    }
+
+    .stock-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.38rem;
+      width: fit-content;
+      padding: 0.3rem 0.58rem;
+      border-radius: 999px;
+      font-size: 0.82rem;
+      font-weight: 600;
+    }
+
+    .stock-badge.in-stock {
+      background: #dcfce7;
+      color: #166534;
+      border: 1px solid #86efac;
+    }
+
+    .stock-badge.low-stock {
+      background: #fee2e2;
+      color: #991b1b;
+      border: 1px solid #fca5a5;
+    }
+
+    .admin-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.55rem;
+      margin-top: 0.5rem;
+    }
+
+    .admin-action-btn {
+      border: none;
+      border-radius: 10px;
+      padding: 0.56rem 0.7rem;
+      color: #fff;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.35rem;
+      transition: transform 0.2s ease, filter 0.2s ease;
+    }
+
+    .admin-action-btn svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    .admin-action-btn:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.04);
+    }
+
+    .admin-action-btn.edit {
+      background: #f59e0b;
+    }
+
+    .admin-action-btn.delete {
+      background: #ef4444;
+    }
+
+    .stock-legend {
+      margin-top: 0.8rem;
+      color: #b45309;
+      font-size: 0.92rem;
+      font-weight: 600;
+      min-height: 1.2rem;
+    }
+
+    .product-form {
+      display: grid;
+      gap: 0.9rem;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.85rem;
+    }
+
+    .form-group {
+      display: grid;
+      gap: 0.35rem;
+    }
+
+    .form-group.full {
+      grid-column: 1 / -1;
+    }
+
+    .form-group label {
+      font-weight: 600;
+      font-size: 0.92rem;
+      color: #374151;
+    }
+
+    .form-group input,
+    .form-group textarea {
+      border: 1.5px solid #e5e7eb;
+      border-radius: 11px;
+      padding: 0.7rem 0.78rem;
+      font: inherit;
+      background: #fff;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: var(--accent-2);
+      box-shadow: 0 0 0 4px rgba(249, 115, 22, 0.15);
+    }
+
+    .form-group textarea {
+      min-height: 110px;
+      resize: vertical;
+    }
+
+    .image-preview {
+      border: 1px dashed #d1d5db;
+      border-radius: 12px;
+      background: #f9fafb;
+      min-height: 180px;
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      color: #9ca3af;
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+
+    .image-preview img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .form-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 0.65rem;
+    }
+
+    .btn {
+      border: none;
+      border-radius: 11px;
+      padding: 0.7rem 1.15rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.45rem;
+      min-width: 120px;
+      position: relative;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+    }
+
+    .btn.secondary {
+      background: #e5e7eb;
+      color: #111827;
+    }
+
+    .btn.primary {
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-2) 100%);
+      color: #fff;
+      box-shadow: 0 10px 18px rgba(249, 115, 22, 0.28);
+    }
+
+    .btn .btn-spinner {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      border: 2px solid rgba(255, 255, 255, 0.35);
+      border-top-color: #fff;
+      animation: spin 0.75s linear infinite;
+      display: none;
+    }
+
+    .btn.is-loading .btn-spinner {
+      display: inline-block;
+    }
+
+    .btn.is-loading .btn-label {
+      opacity: 0.88;
+    }
+
+    .admin-message {
+      min-height: 1.3rem;
+      font-weight: 600;
+      font-size: 0.93rem;
+      text-align: left;
+      margin-top: 0.2rem;
+    }
+
+    .admin-message.success {
+      color: #15803d;
+    }
+
+    .admin-message.error {
+      color: #b91c1c;
+    }
+
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.45);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      z-index: 1000;
+    }
+
+    .modal-backdrop.active {
+      display: flex;
+    }
+
+    .modal {
+      width: min(420px, 100%);
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 18px 38px rgba(15, 23, 42, 0.2);
+      padding: 1.2rem;
+      animation: popIn 0.2s ease;
+    }
+
+    .modal h3 {
+      margin: 0;
+      font-size: 1.15rem;
+    }
+
+    .modal p {
+      color: #4b5563;
+      margin: 0.65rem 0 1rem;
+      line-height: 1.55;
+    }
+
+    .modal-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 0.5rem;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    @keyframes popIn {
+      from {
+        opacity: 0;
+        transform: scale(0.96);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    @media (max-width: 1080px) {
+      .admin-shell {
+        grid-template-columns: 1fr;
+      }
+
+      .admin-sidebar {
+        position: static;
+        height: auto;
+      }
+
+      .side-nav {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 768px) {
+      .admin-main {
+        padding: 1rem;
+      }
+
+      .admin-topbar {
+        padding: 1rem;
+      }
+
+      .admin-topbar h1 {
+        font-size: 1.2rem;
+      }
+
+      .stats-row {
+        grid-template-columns: 1fr;
+      }
+
+      .analytics-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .admin-products-list {
+        grid-template-columns: 1fr;
+      }
+
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .form-actions {
+        justify-content: stretch;
+      }
+
+      .form-actions .btn {
+        flex: 1;
+      }
+
+      .side-nav {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      #logout-btn {
+        display: none;
+      }
+    }
   </style>
 </head>
 <body>
-  <div class="admin-header">
-    <div class="logo" style="margin-bottom:1.2rem;"><img src="img/ptl-logo.jpg" alt="PTL Logo" style="height:2.2em;vertical-align:middle;margin-right:0.5em;"></div>
-    <h1>Welcome, Admin!</h1>
-    <p>Manage your products below.</p>
-    <button class="admin-logout-btn" id="logout-btn">Logout</button>
+  <div class="admin-shell">
+    <aside class="admin-sidebar">
+      <div class="brand">
+        <img src="img/ptl-logo.jpg" alt="PTL Logo">
+        <h2>PTL Best Tinapa<br>Admin</h2>
+      </div>
+
+      <nav class="side-nav" aria-label="Admin sections">
+        <a href="#dashboard-section" class="active">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/><rect x="3" y="14" width="7" height="7"/></svg>
+          Dashboard
+        </a>
+        <a href="#products-section">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 7L12 3L4 7L12 11L20 7Z"/><path d="M4 7V17L12 21L20 17V7"/></svg>
+          Products
+        </a>
+        <a href="#orders-section">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2H18V22H6Z"/><path d="M9 7H15"/><path d="M9 12H15"/></svg>
+          Orders
+        </a>
+        <a href="#analytics-section">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 20V10"/><path d="M10 20V4"/><path d="M16 20V14"/><path d="M22 20V7"/></svg>
+          Analytics
+        </a>
+        <button type="button" id="sidebar-logout-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5A2 2 0 0 1 3 19V5A2 2 0 0 1 5 3H9"/><path d="M16 17L21 12L16 7"/><path d="M21 12H9"/></svg>
+          Logout
+        </button>
+      </nav>
+    </aside>
+
+    <main class="admin-main">
+      <header class="admin-topbar" id="dashboard-section">
+        <div>
+          <h1>Admin Dashboard</h1>
+          <p>Manage products, inventory, and store content.</p>
+        </div>
+        <button class="logout-btn" id="logout-btn" type="button">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5A2 2 0 0 1 3 19V5A2 2 0 0 1 5 3H9"/><path d="M16 17L21 12L16 7"/><path d="M21 12H9"/></svg>
+          Logout
+        </button>
+      </header>
+
+      <section class="panel" id="analytics-section">
+        <div class="stats-row">
+          <article class="stat">
+            <h3>Total Products</h3>
+            <p id="product-count">0</p>
+          </article>
+          <article class="stat">
+            <h3>Low Stock Items</h3>
+            <p id="low-stock-count">0</p>
+          </article>
+        </div>
+        <div class="analytics-grid">
+          <article class="chart-card">
+            <h3>Sales Trend (Monthly)</h3>
+            <div class="chart-wrap"><canvas id="sales-trend-chart"></canvas></div>
+          </article>
+          <article class="chart-card">
+            <h3>Top Products (Revenue)</h3>
+            <div class="chart-wrap"><canvas id="top-products-chart"></canvas></div>
+          </article>
+          <article class="chart-card">
+            <h3>Low Stock Trend</h3>
+            <div class="chart-wrap"><canvas id="low-stock-chart"></canvas></div>
+          </article>
+        </div>
+      </section>
+
+      <section class="panel" id="products-section">
+        <div class="panel-head">
+          <h2>Product List</h2>
+          <div class="search-wrap">
+            <input type="search" id="product-search" placeholder="Search by name or description">
+          </div>
+        </div>
+        <div id="admin-products-list" class="admin-products-list"></div>
+        <div id="admin-stock-legend" class="stock-legend"></div>
+      </section>
+
+      <section class="panel" id="orders-section">
+        <div class="panel-head">
+          <h2 id="form-heading">Add Product</h2>
+        </div>
+
+        <form id="add-product-form" class="product-form" enctype="multipart/form-data">
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="prod-name">Product Name *</label>
+              <input type="text" id="prod-name" name="name" required>
+            </div>
+            <div class="form-group">
+              <label for="prod-price">Price *</label>
+              <input type="text" id="prod-price" name="price" required>
+            </div>
+            <div class="form-group">
+              <label for="prod-stock">Stock *</label>
+              <input type="number" id="prod-stock" name="stock" min="0" value="10" required>
+            </div>
+            <div class="form-group">
+              <label for="prod-image">Product Image *</label>
+              <input type="file" id="prod-image" name="image" accept="image/*" required>
+            </div>
+            <div class="form-group full">
+              <label for="prod-desc">Description *</label>
+              <textarea id="prod-desc" name="description" required></textarea>
+            </div>
+            <div class="form-group full">
+              <label>Image Preview</label>
+              <div class="image-preview" id="image-preview">No image selected</div>
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <button type="reset" class="btn secondary" id="reset-form-btn">Cancel</button>
+            <button type="submit" class="btn primary" id="submit-form-btn">
+              <span class="btn-spinner" aria-hidden="true"></span>
+              <span class="btn-label">Add Product</span>
+            </button>
+          </div>
+          <div id="admin-message" class="admin-message"></div>
+        </form>
+      </section>
+    </main>
   </div>
-  <div class="admin-section">
-    <h2>Products</h2>
-    <div id="admin-products-list" class="admin-products-list"></div>
-    <hr style="margin:2.5rem 0;">
-    <h2 id="form-heading">Add New Product</h2>
-    <form id="add-product-form" enctype="multipart/form-data">
-      <div class="admin-form-group">
-        <label for="prod-name">Product Name *</label>
-        <input type="text" id="prod-name" name="name" required>
+
+  <div id="confirm-modal-backdrop" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="confirm-modal-title">
+    <div class="modal">
+      <h3 id="confirm-modal-title">Delete Product?</h3>
+      <p>This action cannot be undone. The product will be removed from your customer pages immediately.</p>
+      <div class="modal-actions">
+        <button type="button" class="btn secondary" id="cancel-delete-btn">Cancel</button>
+        <button type="button" class="btn primary" id="confirm-delete-btn" style="background:#ef4444;">Delete</button>
       </div>
-      <div class="admin-form-group">
-        <label for="prod-price">Price *</label>
-        <input type="text" id="prod-price" name="price" required>
-      </div>
-      <div class="admin-form-group">
-        <label for="prod-image">Product Image *</label>
-        <input type="file" id="prod-image" name="image" accept="image/*" required>
-      </div>
-      <div class="admin-form-group">
-        <label for="prod-desc">Product Description *</label>
-        <textarea id="prod-desc" name="description" required></textarea>
-      </div>
-      <div class="admin-form-group">
-        <label for="prod-stock">Stock *</label>
-        <input type="number" id="prod-stock" name="stock" min="0" value="10" required>
-      </div>
-        <div id="admin-stock-legend" style="margin-top:1rem;font-size:0.98em;color:#e11d48;"></div>
-      <div class="admin-form-actions">
-        <button type="reset" class="admin-add-btn" style="background:#e2e8f0;color:#2d3748;">Cancel</button>
-        <button type="submit" class="admin-add-btn">Add Product</button>
-      </div>
-      <div id="admin-message" class="admin-message"></div>
-    </form>
+    </div>
   </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="js/admin-dashboard.js"></script>
-  <script>
-    if (localStorage.getItem('admin_logged_in') !== '1') {
-      window.location.href = 'admin-login.html';
-    }
-    document.getElementById('logout-btn').onclick = function() {
-      localStorage.removeItem('admin_logged_in');
-      window.location.href = 'admin-login.html';
-    };
-  </script>
 </body>
+</html>
 

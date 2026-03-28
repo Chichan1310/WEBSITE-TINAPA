@@ -24,4 +24,14 @@ describe('Server API Tests', () => {
       .expect(401);
     expect(res.body.success).toBe(false);
   });
+
+  test('GET /api/analytics returns analytics payload', async () => {
+    const res = await request(app)
+      .get('/api/analytics')
+      .expect(200);
+    expect(res.body.success).toBe(true);
+    expect(Array.isArray(res.body.monthlySales)).toBe(true);
+    expect(Array.isArray(res.body.topProducts)).toBe(true);
+    expect(Array.isArray(res.body.lowStockTrend)).toBe(true);
+  });
 });
