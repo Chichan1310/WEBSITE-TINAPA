@@ -22,14 +22,94 @@ const fileUpload = multer({ storage: upload });
 const app = express();
 const PORT = 3000;
 
-// Minimal admin products route for test compatibility
+// Admin: Get all products (for dashboard)
 app.get('/api/admin/products', (req, res) => {
   const pass = req.query.pass;
-  if (!pass) {
+  if (!pass || pass !== 'admin123') {
     return res.status(401).json({ success: false, error: 'Unauthorized' });
   }
-  // Optionally, you can return products if pass is correct, but for now just return empty array for test compatibility
-  res.json([]);
+  try {
+    const productsData = fs.readFileSync(path.join(__dirname, 'data', 'products.json'), 'utf8');
+    res.json(JSON.parse(productsData));
+  } catch (err) {
+    res.status(500).json({ success: false, error: 'Server error' });
+  }
+});
+
+// Admin: Add new product with image upload
+app.post('/api/admin/add-product', fileUpload.single('image'), (req, res) => {
+  try {
+    const { name, price, description, stock } = req.body;
+    if (!name || !price || !description || !req.file || stock === undefined) {
+      return res.json({ success: false, error: 'All fields are required.' });
+    }
+    const productsPath = path.join(__dirname, 'data', 'products.json');
+    let products = [];
+    if (fs.existsSync(productsPath)) {
+      products = JSON.parse(fs.readFileSync(productsPath, 'utf8'));
+    }
+    const newProduct = {
+      id: Date.now(),
+      name,
+      price,
+      description,
+      image: '/uploads/' + req.file.filename,
+      stock: parseInt(stock, 10)
+    };
+    products.push(newProduct);
+    fs.writeFileSync(productsPath, JSON.stringify(products, null, 2));
+    res.json({ success: true, product: newProduct });
+  } catch (err) {
+    res.json({ success: false, error: 'Server error.' });
+  }
+});
+
+// Admin: Edit product
+app.post('/api/admin/edit-product', fileUpload.single('image'), (req, res) => {
+  try {
+    const { id, name, price, description, stock } = req.body;
+    if (!id || !name || !price || !description || stock === undefined) {
+      return res.json({ success: false, error: 'All fields are required.' });
+    }
+    const productsPath = path.join(__dirname, 'data', 'products.json');
+    let products = [];
+    if (fs.existsSync(productsPath)) {
+      products = JSON.parse(fs.readFileSync(productsPath, 'utf8'));
+    }
+    const idx = products.findIndex(p => String(p.id) === String(id));
+    if (idx === -1) return res.json({ success: false, error: 'Product not found.' });
+    products[idx].name = name;
+    products[idx].price = price;
+    products[idx].description = description;
+    products[idx].stock = parseInt(stock, 10);
+    if (req.file) {
+      products[idx].image = '/uploads/' + req.file.filename;
+    }
+    fs.writeFileSync(productsPath, JSON.stringify(products, null, 2));
+    res.json({ success: true, product: products[idx] });
+  } catch (err) {
+    res.json({ success: false, error: 'Server error.' });
+  }
+});
+
+// Admin: Delete product
+app.post('/api/admin/delete-product', (req, res) => {
+  try {
+    const { id } = req.body;
+    if (!id) return res.json({ success: false, error: 'Product id required.' });
+    const productsPath = path.join(__dirname, 'data', 'products.json');
+    let products = [];
+    if (fs.existsSync(productsPath)) {
+      products = JSON.parse(fs.readFileSync(productsPath, 'utf8'));
+    }
+    const idx = products.findIndex(p => String(p.id) === String(id));
+    if (idx === -1) return res.json({ success: false, error: 'Product not found.' });
+    products.splice(idx, 1);
+    fs.writeFileSync(productsPath, JSON.stringify(products, null, 2));
+    res.json({ success: true });
+  } catch (err) {
+    res.json({ success: false, error: 'Server error.' });
+  }
 });
 
 // Middleware
