@@ -29,6 +29,7 @@ document.addEventListener('DOMContentLoaded', function() {
               </div>
               <div class="product-name">${product.name}</div>
               <div class="product-price">${product.price}</div>
+              <div class="product-description">${product.description || 'Freshly prepared premium smoked product.'}</div>
               <button class="add-to-cart" data-product-id="${product.id}" data-product-name="${encodeURIComponent(product.name)}" data-product-price="${encodeURIComponent(product.price)}">Add to Cart</button>
             </div>
           `;
