@@ -1,3 +1,58 @@
+/* Contact Page Enhancements */
+.contact-subtitle {
+  text-align: center;
+  color: #8B4513;
+  font-size: 1.1rem;
+  margin-bottom: 2.2rem;
+  opacity: 0.85;
+}
+.input-icon-group {
+  position: relative;
+  margin-bottom: 1.5rem;
+}
+.input-icon {
+  position: absolute;
+  left: 1.2rem;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  opacity: 0.7;
+}
+.input-icon-group input,
+.input-icon-group textarea {
+  padding-left: 2.5rem;
+}
+.form-message {
+  text-align: center;
+  margin-top: 1.5rem;
+  font-weight: 500;
+  font-size: 1.1rem;
+}
+.form-message.success { color: #059669; }
+.form-message.error { color: #e11d48; }
+.contact-info-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  justify-content: center;
+  margin-top: 2.5rem;
+}
+.contact-card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 18px rgba(255,140,0,0.08);
+  padding: 1.2rem 2rem;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  color: #8B4513;
+  min-width: 220px;
+  justify-content: center;
+}
+.contact-card-icon {
+  font-size: 1.5rem;
+}
 /* Modern Professional Business UI for PTL Best Tinapa */
 
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');

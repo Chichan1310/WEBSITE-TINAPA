@@ -42,6 +42,12 @@ document.addEventListener('DOMContentLoaded', function() {
       const email = document.getElementById('email').value;
       const message = document.getElementById('message').value;
 
+      const btn = document.getElementById('contact-submit-btn');
+      const btnText = document.getElementById('contact-btn-text');
+      const btnSpinner = document.getElementById('contact-btn-spinner');
+      btn.disabled = true;
+      btnText.style.display = 'none';
+      btnSpinner.style.display = 'inline-block';
       fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -49,18 +55,24 @@ document.addEventListener('DOMContentLoaded', function() {
       })
       .then(res => res.json())
       .then(data => {
+        btn.disabled = false;
+        btnText.style.display = '';
+        btnSpinner.style.display = 'none';
         if (data.success) {
           formMessage.textContent = data.message;
-          formMessage.style.color = 'green';
+          formMessage.className = 'form-message success';
           contactForm.reset();
         } else {
           formMessage.textContent = 'Error sending message.';
-          formMessage.style.color = 'red';
+          formMessage.className = 'form-message error';
         }
       })
       .catch(err => {
+        btn.disabled = false;
+        btnText.style.display = '';
+        btnSpinner.style.display = 'none';
         formMessage.textContent = 'Error. Try again.';
-        formMessage.style.color = 'red';
+        formMessage.className = 'form-message error';
         console.error(err);
       });
     });
