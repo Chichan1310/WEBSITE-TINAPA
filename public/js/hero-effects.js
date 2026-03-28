@@ -1,6 +1,22 @@
 document.addEventListener('DOMContentLoaded', function () {
   document.body.classList.add('page-ready');
 
+  const revealElements = document.querySelectorAll('.reveal-on-scroll');
+  if (revealElements.length) {
+    const observer = new IntersectionObserver(function (entries, obs) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          obs.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.14, rootMargin: '0px 0px -60px 0px' });
+
+    revealElements.forEach(function (el) {
+      observer.observe(el);
+    });
+  }
+
   const hero = document.getElementById('hero');
   const heroImage = document.querySelector('.hero-image');
 
