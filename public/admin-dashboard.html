@@ -61,6 +61,72 @@
       </div>
       <div id="admin-message" class="message"></div>
     </main>
+    <!-- Homepage Products Management -->
+    <section class="homepage-products-admin" style="margin-top:2.5rem;">
+      <h2>Homepage Products</h2>
+      <div id="homepage-products-list"></div>
+      <button id="add-home-product-btn" class="add-product-btn" style="margin-top:1rem;"><i class="fas fa-plus"></i> Add Homepage Product</button>
+    </section>
+    <!-- Edit Homepage Product Modal -->
+    <div id="edit-home-prod-modal" class="modal" style="display:none;">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>Edit Homepage Product</h2>
+          <button class="close-modal" onclick="document.getElementById('edit-home-prod-modal').style.display='none';"><i class="fas fa-times"></i></button>
+        </div>
+        <form id="edit-home-prod-form">
+          <div class="modal-body">
+            <input type="text" id="edit-home-prod-name" placeholder="Product Name *" required>
+            <input type="text" id="edit-home-prod-price" placeholder="Price *" required>
+            <input type="text" id="edit-home-prod-image" placeholder="Image URL or path *" required>
+            <textarea id="edit-home-prod-desc" placeholder="Product Description *" required></textarea>
+            <input type="hidden" id="edit-home-prod-idx">
+          </div>
+          <div class="modal-actions">
+            <button type="button" class="modal-btn secondary" onclick="document.getElementById('edit-home-prod-modal').style.display='none';">Cancel</button>
+            <button type="submit" class="modal-btn primary">Save Changes</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <!-- Add Homepage Product Modal -->
+    <div id="add-home-prod-modal" class="modal" style="display:none;">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>Add Homepage Product</h2>
+          <button class="close-modal" onclick="document.getElementById('add-home-prod-modal').style.display='none';"><i class="fas fa-times"></i></button>
+        </div>
+        <form id="add-home-prod-form">
+          <div class="modal-body">
+            <input type="text" id="add-home-prod-name" placeholder="Product Name *" required>
+            <input type="text" id="add-home-prod-price" placeholder="Price *" required>
+            <input type="text" id="add-home-prod-image" placeholder="Image URL or path *" required>
+            <textarea id="add-home-prod-desc" placeholder="Product Description *" required></textarea>
+          </div>
+          <div class="modal-actions">
+            <button type="button" class="modal-btn secondary" onclick="document.getElementById('add-home-prod-modal').style.display='none';">Cancel</button>
+            <button type="submit" class="modal-btn primary">Add Product</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <!-- Dashboard Overview -->
+    <section class="dashboard-overview">
+      <div class="dashboard-cards">
+        <div class="dashboard-card">
+          <div class="card-title">Total Products</div>
+          <div class="card-value" id="stat-total-products">0</div>
+        </div>
+        <div class="dashboard-card">
+          <div class="card-title">Total Stock</div>
+          <div class="card-value" id="stat-total-stock">0</div>
+        </div>
+        <div class="dashboard-card">
+          <div class="card-title">Low Stock</div>
+          <div class="card-value" id="stat-low-stock">0</div>
+        </div>
+      </div>
+    </section>
   </div>
   <div id="product-modal" class="modal">
     <div class="modal-content">
@@ -70,12 +136,12 @@
           <i class="fas fa-times"></i>
         </button>
       </div>
-      <form id="add-product-form">
+      <form id="add-product-form" enctype="multipart/form-data">
         <div class="modal-body">
-          <input type="text" id="prod-name" placeholder="Product Name *" required>
-          <input type="text" id="prod-price" placeholder="Price (e.g. ₱250/kg) *" required>
-          <input type="file" id="prod-image" accept="image/*">
-          <textarea id="prod-desc" placeholder="Product Description *" required></textarea>
+          <input type="text" id="prod-name" name="name" placeholder="Product Name *" required>
+          <input type="text" id="prod-price" name="price" placeholder="Price (e.g. ₱250/kg) *" required>
+          <input type="file" id="prod-image" name="image" accept="image/*">
+          <textarea id="prod-desc" name="description" placeholder="Product Description *" required></textarea>
         </div>
         <div class="modal-actions">
           <button type="button" class="modal-btn secondary" onclick="closeModal()">Cancel</button>
@@ -84,6 +150,7 @@
       </form>
     </div>
   </div>
+  <script src="js/admin-home-products.js"></script>
   <script src="js/admin-dashboard.js"></script>
 </body>
 </html>

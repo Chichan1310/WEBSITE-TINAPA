@@ -1,0 +1,20 @@
+[
+  {
+    "image": "img/tinapa1.jpg",
+    "name": "Classic Tinapa",
+    "price": "₱120 / pack",
+    "description": "Traditional smoked milkfish, rich in flavor and perfectly moist."
+  },
+  {
+    "image": "img/tinapa2.jpg",
+    "name": "Spicy Tinapa",
+    "price": "₱130 / pack",
+    "description": "Smoked fish with a spicy kick, for those who love a little heat."
+  },
+  {
+    "image": "img/tinapa3.jpg",
+    "name": "Premium Tinapa",
+    "price": "₱150 / pack",
+    "description": "Hand-selected, large milkfish, smoked to perfection for special occasions."
+  }
+]

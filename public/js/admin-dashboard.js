@@ -33,6 +33,22 @@ async function loadProducts() {
     products = data;
     filteredProducts = [...products];
     displayProducts();
+    updateOverviewCards();
+  // Update dashboard overview cards
+  function updateOverviewCards() {
+    // Total Products
+    const totalProducts = products.length;
+    // Total Stock (sum of product.stock if available, else 0)
+    const totalStock = products.reduce((sum, p) => sum + (p.stock ? Number(p.stock) : 0), 0);
+    // Low Stock (products with stock <= 5)
+    const lowStock = products.filter(p => (p.stock ? Number(p.stock) : 0) <= 5).length;
+    const elTotal = document.getElementById('stat-total-products');
+    const elStock = document.getElementById('stat-total-stock');
+    const elLow = document.getElementById('stat-low-stock');
+    if (elTotal) elTotal.textContent = totalProducts;
+    if (elStock) elStock.textContent = totalStock;
+    if (elLow) elLow.textContent = lowStock;
+  }
   } catch (err) {
     console.error('Load products error:', err);
   }
@@ -126,35 +142,25 @@ function filterProducts() {
 
 async function handleFormSubmit(e) {
   e.preventDefault();
-  const formData = new FormData();
+  const form = document.getElementById('add-product-form');
+  const formData = new FormData(form);
   formData.append('pass', ADMIN_PASS);
-  formData.append('name', document.getElementById('prod-name').value);
-  formData.append('price', document.getElementById('prod-price').value);
-  formData.append('description', document.getElementById('prod-desc').value);
-  const imageFile = document.getElementById('prod-image').files[0];
-  if (imageFile) formData.append('image', imageFile);
-  
   try {
-    const url = isEditing ? `/api/admin/product/${editingId}?pass=${ADMIN_PASS}` : '/api/admin/product';
-    const method = isEditing ? 'PUT' : 'POST';
-    
-    const res = await fetch(url, {
-      method,
+    const res = await fetch('/api/admin/product', {
+      method: 'POST',
       body: formData
     });
     const data = await res.json();
-    
     if (data.success) {
-      showMessage(isEditing ? 'Product updated!' : 'Product added!');
-      resetForm();
-      loadProducts();
+      showMessage('Product added!', 'success');
+      form.reset();
       closeModal();
+      loadProducts();
     } else {
-      showMessage(data.error || 'Error occurred', 'error');
+      showMessage(data.error || 'Failed to add product', 'error');
     }
   } catch (err) {
-    showMessage('Network error', 'error');
-    console.error(err);
+    showMessage('Error adding product', 'error');
   }
 }
 
@@ -234,4 +240,23 @@ style.textContent = `
   .message.success { color: #10b981; }
 `;
 document.head.appendChild(style);
+
+// Dashboard statistics updater
+function updateDashboardStats() {
+  fetch('/api/admin/products?pass=admin123')
+    .then(res => res.json())
+    .then(products => {
+      document.getElementById('stat-total-products').textContent = products.length;
+      let totalStock = 0, lowStock = 0;
+      products.forEach(p => {
+        const stock = parseInt(p.stock || 0, 10);
+        totalStock += stock;
+        if (stock <= 5) lowStock++;
+      });
+      document.getElementById('stat-total-stock').textContent = totalStock;
+      document.getElementById('stat-low-stock').textContent = lowStock;
+    });
+}
+
+document.addEventListener('DOMContentLoaded', updateDashboardStats);
 

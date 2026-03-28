@@ -452,3 +452,46 @@
   }
 }
 
+/* Dashboard Overview Cards */
+.dashboard-overview {
+  margin: 2.5rem 0 2rem 0;
+}
+.dashboard-cards {
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+.dashboard-card {
+  background: #fff;
+  border-radius: 1.1rem;
+  box-shadow: 0 4px 24px rgba(30,41,59,0.09);
+  padding: 1.5rem 2.2rem;
+  min-width: 180px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+}
+.card-title {
+  font-size: 1.02rem;
+  color: #64748b;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+.card-value {
+  font-size: 2.1rem;
+  color: #2563eb;
+  font-weight: 700;
+}
+@media (max-width: 700px) {
+  .dashboard-cards {
+    flex-direction: column;
+    gap: 1.2rem;
+  }
+  .dashboard-card {
+    min-width: 0;
+    width: 100%;
+    align-items: center;
+  }
+}
+

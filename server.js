@@ -134,6 +134,33 @@ app.put('/api/admin/product/:id', fileUpload.single('image'), (req, res) => {
   }
 });
 
+// --- Homepage Products API ---
+// Get homepage products
+app.get('/api/home-products', (req, res) => {
+  const file = path.join(__dirname, 'data', 'products-home.json');
+  try {
+    const data = fs.readFileSync(file, 'utf8');
+    res.json(JSON.parse(data));
+  } catch (err) {
+    res.status(500).json({ success: false, error: 'Server error' });
+  }
+});
+// Update homepage products (replace all)
+app.put('/api/home-products', (req, res) => {
+  const pass = req.query.pass;
+  if (pass !== 'admin123') {
+    return res.status(401).json({ success: false, error: 'Unauthorized' });
+  }
+  const file = path.join(__dirname, 'data', 'products-home.json');
+  try {
+    fs.writeFileSync(file, JSON.stringify(req.body, null, 2));
+    res.json({ success: true });
+  } catch (err) {
+    res.status(500).json({ success: false, error: 'Server error' });
+  }
+});
+// --- End Homepage Products API ---
+
 // Serve index.html
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
