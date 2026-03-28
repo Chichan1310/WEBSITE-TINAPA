@@ -1,104 +1,158 @@
-# PTL Best Tinapa Website - CI/CD Complete 
+# PTL Best Tinapa in Bulacan - Business Website
 
-##  Status
-**Local Server:** Running `npm start` ✓  
-**Tests:** `npm test` PASS ✓  
-**CI/CD:** Node.js 24, ready for push ✓  
-**Public Repo:** Unlimited Actions ✓
+Professional business website for PTL Best Tinapa in Bulacan, a Filipino smoked fish brand.  
+This project includes a customer-facing site, a protected admin workflow for product management, and an API-backed product catalog.
 
-##  Production Features
--  Admin dashboard (CRUD + upload + filter)
--  Fully responsive design
--  API-driven products catalog
--  Contact form API
--  Category filtering (fish/meat)
--  Pagination & search
+## Client Business Overview
+PTL Best Tinapa in Bulacan is a local food business focused on premium smoked fish products made using traditional Filipino smoking methods.
 
-##  Stack
-```
-Backend: Node.js 24 | Express.js
-Frontend: HTML | CSS | Vanilla JS
-Testing: Jest | Supertest
-CI/CD: GitHub Actions → Vercel
-Storage: JSON | Multer uploads
-```
+### Business Goals
+- Promote the brand online with a modern, premium visual identity.
+- Showcase available products with images, prices, and descriptions.
+- Let admins manage product listings without editing code.
+- Provide an easy way for customers to contact and order.
 
-##  3-Step Start
-```bash
-npm install
-npm start  
-# http://localhost:3000
-npm test    # 100% pass
-```
+### Target Users
+- Local customers looking for quality tinapa.
+- Returning buyers who want quick ordering.
+- Business owner/admin managing inventory and product updates.
 
-##  Admin (admin123)
-`/admin.html` → **Full CRUD:**
--  Add product + image
--  Edit all fields  
--  Delete w/ confirm
--  Live search/filter
--  Mobile dashboard
+## Website Features
 
-##  CI/CD Workflow (.github/workflows/ci-cd.yml)
-```
-Push/PR main →
-TEST: npm ci + npm test → PASS ONLY ↓
-DEPLOY: vercel --prod (Vercel secrets)
-```
+### Customer Side
+- Modern homepage with hero, about, gallery, and call-to-action sections.
+- Dynamic product listing powered by API data.
+- User login flow before checkout.
+- Order and payment page with selected product prefill.
+- Contact form submission endpoint.
 
-**Updated:** Node.js 24 (no deprecation warnings)
+### Admin Side
+- Admin login page.
+- Admin dashboard for product CRUD:
+	- Add product with image upload
+	- Edit product details
+	- Delete product
+- Stock indicator and low-stock warning display.
 
-**Secrets (GitHub Settings > Secrets):**
-```
-VERCEL_TOKEN      vercel_xxxx (vercel.com/tokens)
-VERCEL_PROJECT_ID prj_wrFMr5qGYBucTYI7fcXKtzbnhE5O (Vercel settings)
-```
+## Pages
+- Home: index.html
+- About: about.html
+- Products: products.html
+- Contact: contact.html
+- Payment: payment.html
+- User Login: user-login.html
+- Admin Entry: admin.html (redirects to admin-login.html)
+- Admin Login: admin-login.html
+- Admin Dashboard: admin-dashboard.html
 
-##  CI/CD Pipeline Update (2026)
-- Now uses **Node.js 24** for all GitHub Actions workflows.
-- Added `FORCE_JAVASCRIPT_ACTIONS_TO_NODE24=true` to ensure compatibility and remove Node.js 20 deprecation warnings.
-- Vercel deployment uses environment variables for secure token/project ID handling.
-- To trigger the pipeline, simply push or open a pull request to `main`.
+## Technology Stack
+- Backend: Node.js, Express
+- Frontend: HTML, CSS, Vanilla JavaScript
+- Testing: Jest, Supertest
+- File Uploads: Multer
+- Storage: JSON files and local uploads directory
+- CI/CD: GitHub Actions with Vercel deployment
 
-**No more Node.js deprecation warnings!**
+## Project Structure
+- server.js - Express server and API routes
+- public - Static frontend files (pages, CSS, JS, images, uploads)
+- data/products.json - Main product data used by API
+- data/products-home.json - Additional homepage product data endpoint
+- tests/server.test.js - API tests
+- .github/workflows/ci-cd.yml - CI/CD pipeline
 
-##  Tests (npm test)
-```
-PASS products API ✓
-PASS contact form ✓  
-PASS admin auth ✓
-```
+## API Endpoints
 
-##  Professor Workflow
-1. Add collaborator (Settings > Manage)
-2. Push/PR → Auto test/deploy
-3. Live URL updates instantly
+### Public
+- GET /api/products
+	- Returns all products from data/products.json
+- POST /api/contact
+	- Accepts name, email, message and appends to contacts.txt
 
-##  Structure
-```
-server.js                 ← API
-public/admin.html         ← Dashboard
-public/js/admin-dashboard.js ← Logic
-data/products.json        ← Data (w/ categories)
-tests/server.test.js      ← Tests
-.github/workflows/ci-cd.yml ← Pipeline
-```
+### Admin
+- GET /api/admin/products?pass=admin123
+	- Returns products if pass is valid
+- POST /api/admin/add-product
+	- Adds new product (multipart form with image)
+- POST /api/admin/edit-product
+	- Updates existing product
+- POST /api/admin/delete-product
+	- Deletes product by id
 
-##  Git Push Fix
-**Credential Manager → Remove GitHub → push success**
+### Homepage Products API
+- GET /api/home-products
+- PUT /api/home-products?pass=admin123
 
-##  Deploy Live
-```
-git push origin main
-→ Tests run → Vercel live!
-```
-test check
-**Ready for demo & grading! Push to see magic ✨**
+## Local Setup
 
----
+1. Install dependencies
 
-##  Admin Login Credentials
-- **Email:** admin@ptl-tinapa.ph
-- **Password:** admin123
+	 npm install
 
-Use these credentials to access the admin dashboard at `/admin.html`.
+2. Start server
+
+	 npm start
+
+3. Open browser
+
+	 http://localhost:3000
+
+### Development mode
+
+npm run dev
+
+### Run tests
+
+npm test
+
+## Admin Access (Current Demo Credentials)
+- Username: admin
+- Password: admin123
+
+Admin login page: /admin-login.html  
+Admin shortcut: /admin.html
+
+Important: Credentials are currently hardcoded for demo/school project usage.  
+For production, move auth to secure backend sessions and hashed passwords.
+
+## Product Management Flow
+1. Admin logs in.
+2. Admin adds, edits, or deletes products in dashboard.
+3. Changes are saved to data/products.json.
+4. Updated products appear on both:
+	 - Homepage products section
+	 - Products page catalog
+
+## Gallery Image Management
+To add gallery images:
+1. Place image files in public/img.
+2. Use consistent names such as gallery1.jpg, gallery2.jpg, etc.
+3. Update image references in index.html gallery section if filenames differ.
+
+## CI/CD
+The workflow runs from .github/workflows/ci-cd.yml:
+- On push and pull request to main:
+	- Install dependencies
+	- Run tests
+- On push to main:
+	- Deploy to Vercel
+
+### Required GitHub Secrets
+- VERCEL_TOKEN
+- VERCEL_PROJECT_ID
+
+## Testing Coverage
+Current tests cover:
+- Products API response
+- Contact form API response
+- Unauthorized admin products access
+
+## Notes and Recommendations
+- Uploaded product images are stored in public/uploads.
+- Keep product image sizes optimized for faster loading.
+- Consider adding backend authentication and role-based access for production.
+- Consider moving from JSON file storage to a database for scale.
+
+## Maintainer
+PTL Best Tinapa Website Project  
+Developed for client business presentation, product management, and customer engagement.
