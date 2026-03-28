@@ -1,9 +1,5 @@
 name: CI/CD Pipeline
 
-permissions:
-  contents: read
-  pull-requests: write
-
 on:
   push:
     branches: [ main ]
@@ -30,42 +26,7 @@ jobs:
       run: npm ci
     
     - name: Execute test suite
-      id: test_run
-      continue-on-error: true
       run: npm test
-
-    - name: PR comment on test failure
-      if: github.event_name == 'pull_request' && steps.test_run.outcome != 'success'
-      continue-on-error: true
-      uses: marocchino/sticky-pull-request-comment@v2
-      with:
-        header: ci-summary
-        message: |
-          ## CI Result: Tests Failed
-          One or more checks failed for this pull request.
-
-          ### What to do next
-          - Open the **Actions** tab and view job logs.
-          - Fix the failing test or code issue.
-          - Push a new commit to re-run CI.
-
-          Deployment is blocked until tests pass.
-
-    - name: PR comment on test success
-      if: github.event_name == 'pull_request' && steps.test_run.outcome == 'success'
-      continue-on-error: true
-      uses: marocchino/sticky-pull-request-comment@v2
-      with:
-        header: ci-summary
-        message: |
-          ## CI Result: Tests Passed
-          All automated checks passed for this pull request.
-
-          This update is valid for merge and deployment rules.
-
-    - name: Fail workflow if tests failed
-      if: steps.test_run.outcome != 'success'
-      run: exit 1
 
   deploy:
     needs: test
